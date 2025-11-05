@@ -1,13 +1,13 @@
 # extras.py
-def mostrar_letras(lista_letras):
+def mostrar_letras(lista_letras: list) -> None:
     """
     Muestra en pantalla las letras de la lista separadas por "|".
 
-    Parámetros:
+    PARAMETROS:
     lista_letras (list): Lista de letras a mostrar.
 
-    Devuelve:
-    None: No devuelve ningún valor, solo imprime las letras en pantalla.
+    DEVUELVE:
+    (None): No devuelve ningún valor, solo imprime las letras en pantalla.
     """
     print("\n🔠 Letras disponibles:")
 
@@ -20,17 +20,17 @@ def mostrar_letras(lista_letras):
     print(texto)
     print("------------------------------")
 
-def mostrar_resumen_nivel(nivel, puntaje, vidas_restantes):
+def mostrar_resumen_nivel(nivel: int, puntaje: int, vidas_restantes: int) -> None:
     """
     Muestra en pantalla un resumen del nivel con puntaje y vidas restantes.
 
-    Parámetros:
+   PARAMETROS:
     nivel (int): Número del nivel finalizado.
     puntaje (int): Puntaje acumulado hasta el momento.
     vidas_restantes (int): Cantidad de vidas que le quedan al jugador.
 
-    Devuelve:
-    None: No devuelve ningún valor, solo muestra la información en pantalla.
+    DEVUELVE:
+    (None): No devuelve ningún valor, solo muestra la información en pantalla.
     """
     print("\n--------------------------------------")
     print("🏁 Fin del Nivel", nivel)

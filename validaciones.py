@@ -1,7 +1,7 @@
 #validaciones.py
 from palabras import PALABRAS_POR_NIVEL
 
-def validar_palabra_ingresada(palabra_ingresada, palabra_correcta):
+def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> bool:
     """
     Verifica si la palabra ingresada coincide con la palabra correcta.
 
@@ -30,7 +30,7 @@ def validar_palabra_ingresada(palabra_ingresada, palabra_correcta):
     return resultado
 
 
-def convertir_a_minusculas(palabra):
+def convertir_a_minusculas(palabra: str) -> str:
     """
     Convierte todas las letras de una palabra a minúsculas.
 
@@ -51,7 +51,7 @@ def convertir_a_minusculas(palabra):
     return resultado
 
 
-def copiar_lista(lista_original):
+def copiar_lista(lista_original: list) -> list:
     """
     Crea una copia de una lista.
 
@@ -67,7 +67,7 @@ def copiar_lista(lista_original):
     return nueva_lista
 
 
-def validar_letras_usadas(palabra_ingresada, letras_disponibles):
+def validar_letras_usadas(palabra_ingresada: str, letras_disponibles: list) -> bool:
     """
     Verifica que todas las letras de la palabra ingresada estén disponibles en la lista de letras.
 

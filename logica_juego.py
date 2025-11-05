@@ -3,7 +3,19 @@ from funciones_auxiliares import *
 from validaciones import *
 
 
-def jugar_partida(palabra_correcta, vidas, puntaje):
+def jugar_partida(palabra_correcta: str, vidas: int, puntaje: int) -> tuple:
+    """
+ Juega una partida para adivinar la palabra y actualiza puntaje y vidas.
+
+
+    PARAMETROS:
+    palabra_correcta (str): La palabra que el jugador debe adivinar.
+    vidas (int): Cantidad de vidas disponibles al inicio de la partida.
+    puntaje (int): Puntaje acumulado antes de comenzar la partida.
+
+    DEVUELVE:
+    tuple: (puntaje_actualizado, vidas_restantes) luego de la partida.
+    """
     letras = preparar_palabra_desordenada(palabra_correcta)
     mostrar_letras(letras)
 
@@ -26,7 +38,20 @@ def jugar_partida(palabra_correcta, vidas, puntaje):
     return puntaje, vidas
 
 
-def jugar_nivel(nivel, vidas_totales, puntaje, reinicios):
+
+def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int) -> tuple:
+    """
+    Juega todas las partidas de un nivel y actualiza puntaje, vidas y estado del nivel.
+
+    PARAMETROS:
+    nivel (int): Número del nivel.
+    vidas_totales (int): Vidas disponibles al iniciar el nivel.
+    puntaje (int): Puntaje acumulado antes del nivel.
+    reinicios (int): Cantidad de reinicios disponibles si se pierden todas las vidas.
+
+    DEVUELVE:
+    tuple: (puntaje_actualizado, reinicios_restantes, nivel_superado)
+    """
     mostrar_encabezado_de_nivel(nivel)
     palabras = obtener_palabras_del_nivel(nivel)
     nivel_superado = False
@@ -59,8 +84,16 @@ def jugar_nivel(nivel, vidas_totales, puntaje, reinicios):
     return puntaje, reinicios, nivel_superado
 
 
-def iniciar_juego():
-    vidas = 3
+def iniciar_juego(vidas: int = 3) -> None: #parametro opcional / por defecto
+    """
+    Inicia el juego completo, manejando niveles, vidas, reinicios y puntaje.
+
+    PARAMETROS:
+    vidas (int): cantidad de vidas iniciales, por defecto 3
+
+    DEVUELVE:
+    None: No devuelve ningún valor, solo ejecuta el flujo completo del juego.
+    """
     reinicios = 2
     nivel = 1
     puntaje = 0
@@ -81,3 +114,4 @@ def iniciar_juego():
         print("\n🏆 ¡FELICIDADES! Completaste los 5 niveles.")
 
     print("Puntaje final:", puntaje)
+
