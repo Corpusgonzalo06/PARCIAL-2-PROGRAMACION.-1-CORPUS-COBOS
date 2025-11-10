@@ -1,37 +1,37 @@
 #palabras.py
 PALABRAS_POR_NIVEL = {
     1: [  # Naturaleza
-        "SOL", "LUNA", "CIELO", "NUBE", "MAR", "RIO", "FLOR", "ARBOL", "HOJA", "MONTAÑA",
-        "LAGO", "ARENA", "VIENTO", "ROCA", "FUEGO", "HIELO", "NIEVE", "CAMPO", "OLAS", "VALLE",
-        "BOSQUE", "LLUVIA", "TRUENO", "RELAMPAGO", "TIERRA", "SEMILLA", "PLANTA", "FRUTA", "HIERBA", "DESIERTO",
-        "CASCADA", "TORMENTA", "ISLA", "VOLCAN", "OCASO", "AMANECER", "CIELOAZUL", "MUNDO", "FLUVIAL", "NATURALEZA"
+        "sol", "luna", "cielo", "nube", "mar", "rio", "flor", "arbol", "hoja", "montaña",
+        "lago", "arena", "viento", "roca", "fuego", "hielo", "nieve", "campo", "olas", "valle",
+        "bosque", "lluvia", "trueno", "relampago", "tierra", "semilla", "planta", "fruta", "hierba", "desierto",
+        "cascada", "tormenta", "isla", "volcan", "ocaso", "amanecer", "cieloazul", "mundo", "fluvial", "naturaleza"
     ],
 
     2: [  # Animales
-        "GATO", "PERRO", "RATON", "PEZ", "PATO", "LEON", "TIGRE", "CABALLO", "OVEJA", "ZORRO",
-        "LOBO", "VACA", "CABRA", "BURRO", "CONEJO", "DELFIN", "AGUILA", "GORILA", "PINGUINO", "ELEFANTE",
-        "TORTUGA", "SERPIENTE", "ARDILLA", "CAMELLO", "RINOCERONTE", "JIRAFA", "COCODRILO", "CANGURO", "FOCA", "GALLINA",
-        "POLLO", "GAVIOTA", "CARACOL", "MARIPOSA", "ABEJA", "MOSCA", "ARAÑA", "CABALLITO", "BUHO", "CASTOR"
+        "gato", "perro", "raton", "pez", "pato", "leon", "tigre", "caballo", "oveja", "zorro",
+        "lobo", "vaca", "cabra", "burro", "conejo", "delfin", "aguila", "gorila", "pinguino", "elefante",
+        "tortuga", "serpiente", "ardilla", "camello", "rinoceronte", "jirafa", "cocodrilo", "canguro", "foca", "gallina",
+        "pollo", "gaviota", "caracol", "mariposa", "abeja", "mosca", "araña", "caballito", "buho", "castor"
     ],
 
     3: [  # Objetos
-        "MESA", "SILLA", "PUERTA", "VENTANA", "PARED", "VASO", "CUADERNO", "LAPIZ", "LIBRO", "CUCHILLO",
-        "CUCHARA", "PLATO", "TELEVISOR", "CELULAR", "RELOJ", "BOTELLA", "BILLETERA", "ZAPATO", "LLAVE", "MOCHILA",
-        "AURICULAR", "CAMARA", "CUADRO", "LINTERNA", "ESCOBA", "BOLSA", "GAFAS", "PANTALON", "CAMISA", "CHAQUETA",
-        "ALMOHADA", "COLCHON", "SABANA", "CORTINA", "HELADERA", "MICROONDAS", "HORNO", "ESPEJO", "CANDADO", "BARRA"
+        "mesa", "silla", "puerta", "ventana", "pared", "vaso", "cuaderno", "lapiz", "libro", "cuchillo",
+        "cuchara", "plato", "televisor", "celular", "reloj", "botella", "billetera", "zapato", "llave", "mochila",
+        "auricular", "camara", "cuadro", "linterna", "escoba", "bolsa", "gafas", "pantalon", "camisa", "chaqueta",
+        "almohada", "colchon", "sabana", "cortina", "heladera", "microondas", "horno", "espejo", "candado", "barra"
     ],
 
     4: [  # Tecnología
-        "COMPUTADORA", "TECLADO", "PANTALLA", "MOUSE", "CABLE", "PROCESADOR", "MONITOR", "IMPRESORA", "ROUTER", "SERVIDOR",
-        "INTERNET", "ARCHIVO", "PROGRAMA", "JUEGO", "CELULAR", "TABLET", "MEMORIA", "DISCO", "BATERIA", "SISTEMA",
-        "RED", "CONEXION", "MICROCHIP", "DATOS", "USB", "PLACA", "SENSOR", "ANTENA", "ALTAVOZ", "MICROFONO",
-        "CAMARA", "NUBE", "PROYECTOR", "DRON", "SMARTPHONE", "LAPTOP", "SOFTWARE", "HARDWARE", "BASEDEDATOS", "PANTALLALED"
+        "computadora", "teclado", "pantalla", "mouse", "cable", "procesador", "monitor", "impresora", "router", "servidor",
+        "internet", "archivo", "programa", "juego", "celular", "tablet", "memoria", "disco", "bateria", "sistema",
+        "red", "conexion", "microchip", "datos", "usb", "placa", "sensor", "antena", "altavoz", "microfono",
+        "camara", "nube", "proyector", "dron", "smartphone", "laptop", "software", "hardware", "basededatos", "pantallaled"
     ],
 
     5: [  # Nivel experto - Programación / informática
-        "PROGRAMACION", "ALGORITMO", "VARIABLE", "FUNCION", "COMPILADOR", "CODIGO", "MODULO", "ARGUMENTO", "BUCLE", "OPERADOR",
-        "PYTHON", "JAVASCRIPT", "BIBLIOTECA", "PARAMETRO", "ESTRUCTURA", "CONSTANTE", "ENTORNO", "DEBUG", "OBJETO", "LISTA",
-        "DICCIONARIO", "CLASE", "HERENCIA", "MODULARIDAD", "PROYECTO", "SINTAXIS", "DEPENDENCIA", "CONTROLADOR", "INTERFAZ", "SERVIDORWEB",
-        "JSON", "CSV", "BASEDEDATOS", "FRAMEWORK", "ALMACENAMIENTO", "ITERACION", "RECURRENCIA", "COMENTARIO", "FUNCIONAL", "BINARYTREE"
+        "programacion", "algoritmo", "variable", "funcion", "compilador", "codigo", "modulo", "argumento", "bucle", "operador",
+        "python", "javascript", "biblioteca", "parametro", "estructura", "constante", "entorno", "debug", "objeto", "lista",
+        "diccionario", "clase", "herencia", "modularidad", "proyecto", "sintaxis", "dependencia", "controlador", "interfaz", "servidorweb",
+        "json", "csv", "basededatos", "framework", "almacenamiento", "iteracion", "recurrencia", "comentario", "funcional", "binarytree"
     ]
 }

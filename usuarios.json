@@ -1,0 +1,48 @@
+{
+    "f": {
+        "contraseña": "f",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 2,
+        "puntaje_maximo": 0,
+        "puntos": 24
+    },
+    "r": {
+        "contraseña": "r",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 0
+    },
+    "3": {
+        "contraseña": "3",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 0
+    },
+    "2": {
+        "contraseña": "2",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 1,
+        "puntos": 6
+    },
+    "1": {
+        "contraseña": "1",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 0
+    }
+}

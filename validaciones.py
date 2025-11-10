@@ -1,9 +1,11 @@
-#validaciones.py
+# validaciones.py
 from palabras import PALABRAS_POR_NIVEL
+from mis_funciones import * 
 
 def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> bool:
     """
-    Verifica si la palabra ingresada coincide con la palabra correcta.
+    Verifica si la palabra ingresada coincide con la palabra correcta,
+    sin diferenciar mayúsculas/minúsculas.
 
     PARAMETROS:
     palabra_ingresada (str): Palabra escrita por el jugador.
@@ -15,6 +17,7 @@ def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> 
     resultado = False
     vacia = True
 
+    # Verificar si la palabra ingresada no está vacía
     for i in range(len(palabra_ingresada)):
         if palabra_ingresada[i] != " " and palabra_ingresada[i] != "\n" and palabra_ingresada[i] != "\t":
             vacia = False
@@ -22,7 +25,8 @@ def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> 
     if vacia:
         print("⚠️ No ingresaste ninguna palabra.")
     else:
-        if palabra_ingresada == palabra_correcta:
+        # Convertimos ambas palabras a minúsculas antes de comparar
+        if convertir_a_minusculas(palabra_ingresada) == convertir_a_minusculas(palabra_correcta):
             resultado = True
         else:
             resultado = False
@@ -30,46 +34,10 @@ def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> 
     return resultado
 
 
-def convertir_a_minusculas(palabra: str) -> str:
-    """
-    Convierte todas las letras de una palabra a minúsculas.
-
-    PARAMETROS:
-    palabra (str): Palabra a convertir.
-
-    DEVUELVE:
-    str: Palabra con todas sus letras en minúsculas.
-    """
-    resultado = ""
-    for letra in palabra:
-        codigo = ord(letra)
-        if codigo >= 65 and codigo <= 90:
-            letra_minuscula = chr(codigo + 32)
-            resultado = resultado + letra_minuscula
-        else:
-            resultado = resultado + letra
-    return resultado
-
-
-def copiar_lista(lista_original: list) -> list:
-    """
-    Crea una copia de una lista.
-
-    PARAMETROS:
-    lista_original (list): Lista que se quiere copiar.
-
-    DEVUELVE:
-    list: Nueva lista con los mismos elementos de la original.
-    """
-    nueva_lista = []
-    for elemento in lista_original:
-        nueva_lista = nueva_lista + [elemento]
-    return nueva_lista
-
-
 def validar_letras_usadas(palabra_ingresada: str, letras_disponibles: list) -> bool:
     """
-    Verifica que todas las letras de la palabra ingresada estén disponibles en la lista de letras.
+    Verifica que todas las letras de la palabra ingresada estén disponibles en la lista de letras,
+    sin diferenciar mayúsculas/minúsculas.
 
     PARAMETROS:
     palabra_ingresada (str): Palabra que el jugador escribió.
@@ -80,7 +48,7 @@ def validar_letras_usadas(palabra_ingresada: str, letras_disponibles: list) -> b
     """
     palabra_valida = True
     palabra_minuscula = convertir_a_minusculas(palabra_ingresada)
-    letras_copia = copiar_lista(letras_disponibles)
+    letras_copia = convertir_lista_a_minusculas(letras_disponibles)
 
     i = 0
     while i < len(palabra_minuscula) and palabra_valida:
