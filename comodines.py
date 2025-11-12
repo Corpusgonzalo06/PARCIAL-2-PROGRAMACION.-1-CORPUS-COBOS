@@ -3,12 +3,6 @@ from mis_funciones import *
 def revelar_palabra(palabra_correcta: str) -> None:
     """
     Muestra en pantalla la palabra correcta.
-
-    PARAMETROS:
-    palabra_correcta (str): Palabra que se debe mostrar.
-
-    DEVUELVE:
-    None: Solo imprime la palabra, no retorna valor.
     """
     print("💡 La palabra correcta era: " + palabra_correcta)
 
@@ -16,12 +10,6 @@ def revelar_palabra(palabra_correcta: str) -> None:
 def eliminar_restricciones(vidas: int) -> int:
     """
     Permite al jugador tener un intento libre sin perder vida.
-
-    PARAMETROS:
-    vidas (int): Cantidad actual de vidas del jugador.
-
-    DEVUELVE:
-    int: Cantidad de vidas sin cambios.
     """
     print("🚀 Restricciones eliminadas. Tenés un intento libre sin perder vida.")
     return vidas
@@ -30,52 +18,34 @@ def eliminar_restricciones(vidas: int) -> int:
 def dar_pista_extra(palabra_correcta: str) -> None:
     """
     Muestra una pista extra indicando la primera letra de la palabra.
-
-    PARAMETROS:
-    palabra_correcta (str): Palabra de la cual se obtiene la pista.
-
-    DEVUELVE:
-    None: Solo imprime la pista, no retorna valor.
     """
     primera_letra = palabra_correcta[0]
     letra_minuscula = convertir_a_minusculas(primera_letra)
-    print(f"🕵️ Pista extra: la palabra empieza con '{letra_minuscula}'")
+    print("🕵️ Pista extra: la palabra empieza con '" + letra_minuscula + "'")
 
 
 def usar_comodin(opcion: int, palabra_correcta: str, vidas: int) -> int:
     """
     Ejecuta la acción del comodín seleccionado.
-
-    PARAMETROS:
-    opcion (int): Número del comodín elegido.
-    palabra_correcta (str): Palabra correcta de la partida.
-    vidas (int): Cantidad actual de vidas.
-
-    DEVUELVE:
-    int: Cantidad actual de vidas tras usar el comodín.
     """
-    match opcion:
-        case 1:
-            revelar_palabra(palabra_correcta)
-        case 2:
-            vidas = eliminar_restricciones(vidas)
-        case 3:
-            dar_pista_extra(palabra_correcta)
-        case _:
-            print("⚠️ Comodín desconocido")
+    if opcion == 1:
+        revelar_palabra(palabra_correcta)
+    elif opcion == 2:
+        vidas = eliminar_restricciones(vidas)
+    elif opcion == 3:
+        dar_pista_extra(palabra_correcta)
+    else:
+        print("⚠️ Comodín desconocido")
     return vidas
 
 
 def preguntar_uso_comodin() -> bool:
     """
     Pregunta al jugador si desea usar un comodín.
-
-    DEVUELVE:
-    bool: True si desea usar, False si no.
     """
     usar = input("¿Querés usar un comodín? (s/n): ")
     resultado = False
-    if usar == "s":
+    if usar == "s" or usar == "S":
         resultado = True
     return resultado
 
@@ -83,14 +53,57 @@ def preguntar_uso_comodin() -> bool:
 def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
     """
     Obtiene la lista de comodines que todavía están disponibles.
-
-    PARAMETROS:
-    comodines_jugador (dict): Diccionario con los comodines y su disponibilidad.
-
-    DEVUELVE:
-    list: Lista con los nombres de los comodines disponibles.
     """
     disponibles = []
     for nombre in comodines_jugador:
         if comodines_jugador[nombre] == True:
-            disponibles
+            # guardamos el nombre en la lista de disponibles
+            largo = len(disponibles)
+            disponibles += [nombre]  # agregamos sin usar append
+    return disponibles
+
+
+def manejar_comodines(comodines_jugador: dict, palabra_correcta: str, vidas_actuales: int) -> int:
+    """
+    Maneja el uso de comodines durante la partida (sin métodos ni try/except).
+    """
+    disponibles = obtener_comodines_disponibles(comodines_jugador)
+
+    if len(disponibles) == 0:
+        print("🚫 No te quedan comodines disponibles.")
+        return vidas_actuales
+
+    usar = preguntar_uso_comodin()
+    if usar == True:
+        print("🎁 Comodines disponibles:")
+        indice = 0
+        while indice < len(disponibles):
+            print(str(indice + 1) + ". " + disponibles[indice])
+            indice += 1
+
+        opcion = input("Elegí el número del comodín que querés usar: ")
+
+        # Validación manual SIN usar métodos
+        es_numero = True
+        contador = 0
+        while contador < len(opcion):
+            if opcion[contador] < "0" or opcion[contador] > "9":
+                es_numero = False
+            contador += 1
+
+        if es_numero == True:
+            opcion_num = 0
+            contador = 0
+            while contador < len(opcion):
+                opcion_num = opcion_num * 10 + (ord(opcion[contador]) - 48)
+                contador += 1
+
+            if opcion_num >= 1 and opcion_num <= len(disponibles):
+                nombre = disponibles[opcion_num - 1]
+                vidas_actuales = usar_comodin(opcion_num, palabra_correcta, vidas_actuales)
+                comodines_jugador[nombre] = False  # marcar como usado
+            else:
+                print("⚠️ Número fuera de rango.")
+        else:
+            print("⚠️ Debés ingresar un número válido.")
+    return vidas_actuales
