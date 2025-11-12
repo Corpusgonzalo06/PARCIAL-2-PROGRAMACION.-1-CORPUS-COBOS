@@ -75,7 +75,9 @@ def manejar_comodines(comodines_jugador: dict, palabra_correcta: str, vidas_actu
 
     usar = preguntar_uso_comodin()
     if usar == True:
+        print()
         print("🎁 Comodines disponibles:")
+        print()
         indice = 0
         while indice < len(disponibles):
             print(str(indice + 1) + ". " + disponibles[indice])
