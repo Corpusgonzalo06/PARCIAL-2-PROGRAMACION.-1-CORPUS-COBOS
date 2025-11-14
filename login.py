@@ -1,3 +1,4 @@
+#login.py
 from usuarios import guardar_usuarios
 
 def inicializar_estadisticas(usuario_data: dict) -> None:
@@ -75,12 +76,15 @@ def iniciar_sesion(usuarios: dict) -> str | None:
     nombre_usuario = None
     nombre = input("Ingrese su nombre de usuario: ")
     usuario_encontrado = False
-    for usuario_actual in usuarios:
+    for usuario_actual in usuarios:  
         if usuario_actual == nombre:
             usuario_encontrado = True
             break
+
+
     if not usuario_encontrado:
         print("❌ Usuario no encontrado.")
+    
     else:
         contraseña = input("Ingrese su contraseña: ")
         if usuarios[nombre]["contraseña"] != contraseña:
@@ -89,4 +93,5 @@ def iniciar_sesion(usuarios: dict) -> str | None:
             inicializar_estadisticas(usuarios[nombre])
             print("✅ Inicio de sesión exitoso.")
             nombre_usuario = nombre
+            
     return nombre_usuario

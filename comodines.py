@@ -19,6 +19,10 @@ def eliminar_restricciones(vidas: int) -> int:
 def dar_pista_extra(palabra_correcta: str) -> None:
     """
     Muestra una pista extra indicando la primera letra de la palabra.
+
+    PARAMETROS: palabra_correcta -> (string) -> palabra correcta
+
+    RETORNO: (None) no retorna nada porque solo es para mostrar la primera letra de la palabra correcta.
     """
     primera_letra = palabra_correcta[0]
     letra_minuscula = convertir_a_minusculas(primera_letra)
@@ -28,6 +32,12 @@ def dar_pista_extra(palabra_correcta: str) -> None:
 def usar_comodin(opcion: int, palabra_correcta: str, vidas: int) -> int:
     """
     Ejecuta la acción del comodín seleccionado.
+
+    PARAMETROS: opcion -> (entero) -> valor ingresado por el usuario (del 1 al 3).
+                palabra_correcta -> (string)
+                vidas -> (entero) -> cantidad de vidas que tiene el usuario.
+    
+    RETORNA: la ultima actualizacion de vidas porque si elij (3)  no modifica nada.
     """
     match opcion:
         case 1:
@@ -43,6 +53,8 @@ def usar_comodin(opcion: int, palabra_correcta: str, vidas: int) -> int:
 def preguntar_uso_comodin() -> bool:
     """
     Pregunta al jugador si desea usar un comodín.
+
+    RETORNO: retorno un booleano (resultado) True o False de si el usuario ingreso bien el caracter.
     """
     resultado = False
     while True:
@@ -57,7 +69,7 @@ def preguntar_uso_comodin() -> bool:
         else:
             print("Por favor, ingresá 'si' o 'no'.")
 
-    return resultado
+    return resultado 
 
 def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
     """
@@ -74,7 +86,7 @@ def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
 
 def manejar_comodines(comodines_jugador: dict, palabra_correcta: str, vidas_actuales: int) -> int:
     """
-    Maneja el uso de comodines durante la partida (sin métodos ni try/except).
+    Maneja el uso de comodines durante la partida 
     """
     disponibles = obtener_comodines_disponibles(comodines_jugador)
 

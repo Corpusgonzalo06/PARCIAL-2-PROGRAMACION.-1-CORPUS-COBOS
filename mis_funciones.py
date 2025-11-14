@@ -1,3 +1,4 @@
+#mis_funciones.py
 def crear_mi_separador(texto: str, separador: str) -> list:
     """
     Separa un texto en palabras usando un carácter separador.

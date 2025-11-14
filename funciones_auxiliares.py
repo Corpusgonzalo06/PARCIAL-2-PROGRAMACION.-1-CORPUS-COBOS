@@ -42,13 +42,20 @@ def obtener_palabras_del_nivel(nivel: int) -> list:
     DEVUELVE:
     list: Lista con las palabras del nivel. Si el nivel no existe, devuelve una lista vacía.
     """
-    if nivel in PALABRAS_POR_NIVEL:
-        palabras = PALABRAS_POR_NIVEL[nivel]
-    else:
+    existe = False
+    clave_encontrada = None
+    for clave in  PALABRAS_POR_NIVEL:
+        if clave == nivel:
+            existe = True
+            clave_encontrada = clave
+            break
+    if existe == True:
+        palabras = PALABRAS_POR_NIVEL[clave_encontrada]
+    else: 
         palabras = []
+
     return palabras
-
-
+ 
 def preparar_palabra_desordenada(palabra: str) -> list:
     """
     Toma una palabra y devuelve sus letras en orden aleatorio (desordenadas).
