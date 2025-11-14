@@ -1,5 +1,6 @@
 import json
 
+####################################################### usuarios.py
 
 def cargar_usuarios(ruta: str) -> dict:
     """
@@ -12,11 +13,15 @@ def cargar_usuarios(ruta: str) -> dict:
     dict -> Diccionario con los usuarios. 
     Si el archivo no existe o está vacío, devuelve un diccionario vacío.
     """
+    usuarios = {}
     try:
         with open(ruta, "r", encoding="utf-8") as archivo:
             usuarios = json.load(archivo)
-    except (FileNotFoundError, json.JSONDecodeError):
-        usuarios = {}
+    except FileNotFoundError:
+        print("Archivo no encontrado.")
+    except json.JSONDecodeError:
+        print("Archivo vacío o corrupto.")
+    
     return usuarios
 
 
