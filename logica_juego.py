@@ -27,9 +27,12 @@ def obtener_palabra_aleatoria(palabras: list) -> str:
 
 def pedir_y_validar_palabra(palabra_correcta: str) -> bool:
     intento = input("📝 Ingresá una palabra: ")
+
     intento = convertir_a_minusculas(intento)
+    
     palabra_correcta_minus = convertir_a_minusculas(palabra_correcta)
-    return validar_palabra_ingresada(intento, palabra_correcta_minus)
+    palabra_validada = validar_palabra_ingresada(intento, palabra_correcta_minus)
+    return palabra_validada
 
 
 # ================= FUNCIONES DE PARTIDA =================
