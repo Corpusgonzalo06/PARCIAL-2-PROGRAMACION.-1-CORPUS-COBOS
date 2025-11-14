@@ -45,14 +45,19 @@ def preguntar_uso_comodin() -> bool:
     Pregunta al jugador si desea usar un comodín.
     """
     resultado = False
-    usar = input("¿Querés usar un comodín? (si/no): ")
+    while True:
+        usar = input("¿Querés usar un comodín? (si/no): ")
 
-
-    if usar == "si" or usar == "Si" or usar == "sI" or usar == "SI":
-        resultado = True
+        if usar == "si" or usar == "Si" or usar == "sI" or usar == "SI":
+            resultado = True
+            break
+        elif usar == "no" or usar == "No" or usar == "nO" or usar == "NO":
+            resultado = False
+            break
+        else:
+            print("Por favor, ingresá 'si' o 'no'.")
 
     return resultado
-
 
 def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
     """

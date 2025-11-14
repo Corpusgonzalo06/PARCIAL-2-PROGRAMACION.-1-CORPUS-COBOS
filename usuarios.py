@@ -1,7 +1,5 @@
 import json
 
-####################################################### usuarios.py
-
 def cargar_usuarios(ruta: str) -> dict:
     """
     Carga los usuarios desde un archivo JSON.
@@ -34,8 +32,10 @@ def guardar_usuarios(usuarios: dict, ruta: str) -> None:
     ruta (str) -> Ruta del archivo JSON donde se guardarán los usuarios.
 
     DEVUELVE:
-    None -> No devuelve ningún valor, solo realiza la acción de guardar los datos
-            en el archivo indicado.
+    None -> No devuelve ningún valor, solo guarda los datos en el archivo indicado.
     """
-    with open(ruta, "w", encoding="utf-8") as archivo:
-        json.dump(usuarios, archivo, indent=4, ensure_ascii=False)
+    try:
+        with open(ruta, "w", encoding="utf-8") as archivo:
+            json.dump(usuarios, archivo, indent=4)
+    except Exception as error_al_guardar_archivo:
+        print(f"No se pudo guardar el archivo: {error_al_guardar_archivo}")

@@ -1,6 +1,6 @@
 {
     "f": {
-        "contraseña": "f",
+        "contrase\u00f1a": "f",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
@@ -10,7 +10,7 @@
         "puntos": 24
     },
     "r": {
-        "contraseña": "r",
+        "contrase\u00f1a": "r",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
@@ -19,7 +19,7 @@
         "puntos": 0
     },
     "3": {
-        "contraseña": "3",
+        "contrase\u00f1a": "3",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
@@ -28,7 +28,7 @@
         "puntos": 0
     },
     "2": {
-        "contraseña": "2",
+        "contrase\u00f1a": "2",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
@@ -37,7 +37,7 @@
         "puntos": 6
     },
     "1": {
-        "contraseña": "1",
+        "contrase\u00f1a": "1",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
@@ -46,7 +46,7 @@
         "puntos": 5
     },
     "t": {
-        "contraseña": "t",
+        "contrase\u00f1a": "t",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,

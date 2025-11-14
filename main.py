@@ -28,6 +28,7 @@ def main() -> None:
         match opcion:
             case "1":
                 usuario = iniciar_sesion(usuarios)
+                
                 if usuario:
                     print(f"\n🎮 Bienvenido {usuario}! Iniciando juego...\n")
                     iniciar_juego(usuario, usuarios, RUTA)  # pasamos usuarios y ruta
