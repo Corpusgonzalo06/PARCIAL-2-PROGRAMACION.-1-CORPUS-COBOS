@@ -29,14 +29,15 @@ def usar_comodin(opcion: int, palabra_correcta: str, vidas: int) -> int:
     """
     Ejecuta la acción del comodín seleccionado.
     """
-    if opcion == 1:
-        revelar_palabra(palabra_correcta)
-    elif opcion == 2:
-        vidas = eliminar_restricciones(vidas)
-    elif opcion == 3:
-        dar_pista_extra(palabra_correcta)
-    else:
-        print("⚠️ Comodín desconocido")
+    match opcion:
+        case 1:
+            revelar_palabra(palabra_correcta)
+        case 2:
+            vidas = eliminar_restricciones(vidas)
+        case 3:
+            dar_pista_extra(palabra_correcta)
+        case _:
+            print("⚠️ Comodín desconocido")
     return vidas
 
 def preguntar_uso_comodin() -> bool:
