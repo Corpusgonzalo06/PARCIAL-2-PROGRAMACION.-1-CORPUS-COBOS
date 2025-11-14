@@ -1,3 +1,4 @@
+#comodines.py
 from mis_funciones import *
 
 def revelar_palabra(palabra_correcta: str) -> None:
@@ -38,15 +39,17 @@ def usar_comodin(opcion: int, palabra_correcta: str, vidas: int) -> int:
         print("⚠️ Comodín desconocido")
     return vidas
 
-
 def preguntar_uso_comodin() -> bool:
     """
     Pregunta al jugador si desea usar un comodín.
     """
-    usar = input("¿Querés usar un comodín? (s/n): ")
     resultado = False
-    if usar == "s" or usar == "S":
+    usar = input("¿Querés usar un comodín? (si/no): ")
+
+
+    if usar == "si" or usar == "Si" or usar == "sI" or usar == "SI":
         resultado = True
+
     return resultado
 
 
@@ -59,7 +62,7 @@ def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
         if comodines_jugador[nombre] == True:
             # guardamos el nombre en la lista de disponibles
             largo = len(disponibles)
-            disponibles += [nombre]  # agregamos sin usar append
+            disponibles += [nombre] 
     return disponibles
 
 
@@ -85,7 +88,7 @@ def manejar_comodines(comodines_jugador: dict, palabra_correcta: str, vidas_actu
 
         opcion = input("Elegí el número del comodín que querés usar: ")
 
-        # Validación manual SIN usar métodos
+   
         es_numero = True
         contador = 0
         while contador < len(opcion):

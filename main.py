@@ -1,3 +1,4 @@
+#main.py
 from logica_juego import iniciar_juego
 from usuarios import *
 from login import iniciar_sesion, registrar_usuario

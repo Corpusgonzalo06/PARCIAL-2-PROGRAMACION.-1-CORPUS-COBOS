@@ -42,8 +42,8 @@
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
         "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0
+        "derrotas": 1,
+        "puntos": 5
     },
     "t": {
         "contraseña": "t",
