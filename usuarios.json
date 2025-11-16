@@ -42,7 +42,7 @@
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
         "victorias": 0,
-        "derrotas": 2,
+        "derrotas": 1,
         "puntos": 12
     },
     "t": {
@@ -53,5 +53,14 @@
         "victorias": 0,
         "derrotas": 0,
         "puntos": 0
+    },
+    "m": {
+        "contrase\u00f1a": "m",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 1,
+        "puntos": 13
     }
 }

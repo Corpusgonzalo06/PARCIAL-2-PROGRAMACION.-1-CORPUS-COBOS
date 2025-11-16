@@ -38,4 +38,4 @@ def mostrar_resumen_nivel(nivel: int, puntaje: int, vidas_restantes: int) -> Non
     print("❤️ Vidas restantes:", vidas_restantes)
     print("--------------------------------------")
 
-    input("Presioná ENTER para continuar...")
+    input("Presioná ENTER para continuar...") 

@@ -20,7 +20,8 @@ def obtener_palabras_del_nivel(nivel: int) -> list:
 def obtener_palabra_aleatoria(palabras: list) -> str:
     lista_copia = copiar_lista(palabras)
     indice = random.randint(0, len(lista_copia) - 1)
-    return lista_copia[indice]
+    palabra_elegida = lista_copia[indice]
+    return palabra_elegida
 
 
 # ================= FUNCIONES DE PALABRA =================
@@ -29,8 +30,8 @@ def pedir_y_validar_palabra(palabra_correcta: str) -> bool:
     intento = input("📝 Ingresá una palabra: ")
 
     intento = convertir_a_minusculas(intento)
-    
     palabra_correcta_minus = convertir_a_minusculas(palabra_correcta)
+
     palabra_validada = validar_palabra_ingresada(intento, palabra_correcta_minus)
     return palabra_validada
 
@@ -42,7 +43,6 @@ def jugar_partida(palabra_correcta: str, vidas: int, puntaje: int, comodines_jug
     mostrar_letras(letras)
 
     acierto = False
-    puntos = 0
     vidas_actuales = vidas
     puntaje_actual = puntaje
 
@@ -59,7 +59,7 @@ def jugar_partida(palabra_correcta: str, vidas: int, puntaje: int, comodines_jug
             vidas_actuales -= 1
             print(f"❌ ¡Incorrecto! Te quedan {vidas_actuales} vidas.")
 
-    return puntaje_actual, vidas_actuales
+    return (puntaje_actual, vidas_actuales)
 
 
 # ================= FUNCIONES DE NIVEL =================
@@ -67,6 +67,7 @@ def jugar_partida(palabra_correcta: str, vidas: int, puntaje: int, comodines_jug
 def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int, comodines_jugador: dict) -> tuple:
     mostrar_encabezado_de_nivel(nivel)
     palabras = obtener_palabras_del_nivel(nivel)
+
     nivel_superado = False
     vidas_actuales = vidas_totales
     puntaje_actual = puntaje
@@ -76,31 +77,40 @@ def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int, co
         print(f"⚠️ No hay palabras cargadas para el nivel {nivel}.")
         return puntaje_actual, reinicios, nivel_superado
 
-    while partidas < 3 and vidas_actuales > 0:
-        print(f"\n🏆 Partida {partidas + 1} de 3")
+    while partidas < 10 and vidas_actuales > 0:
+        print(f"\n🏆 Palabra {partidas + 1} de 10")
         palabra = obtener_palabra_aleatoria(palabras)
-        puntaje_actual, vidas_actuales = jugar_partida(palabra, vidas_actuales, puntaje_actual, comodines_jugador)
+
+        puntaje_actual, vidas_actuales = jugar_partida(
+            palabra, vidas_actuales, puntaje_actual, comodines_jugador
+        )
+
         if vidas_actuales > 0:
             partidas += 1
 
-    if vidas_actuales > 0:
-        print(f"\n🎉 ¡Nivel {nivel} superado! Puntaje: {puntaje_actual}")
-        nivel_superado = True
-    else:
+    # PERDIÓ TODAS LAS VIDAS
+    if vidas_actuales <= 0:
         print("\n💀 Perdiste todas las vidas.")
         reinicios -= 1
-        if reinicios > 0:
-            print(f"🔁 Reiniciando nivel... Reinicios restantes: {reinicios}")
-        else:
-            print(f"🚫 Fin del juego. Puntaje final: {puntaje_actual}")
 
-    return puntaje_actual, reinicios, nivel_superado
+        if reinicios < 0:
+            print(f"🚫 Fin del juego. Puntaje final: {puntaje_actual}")
+            return puntaje_actual, reinicios, False
+
+        print(f"🔁 Reiniciando nivel... Reinicios restantes: {reinicios}")
+        return puntaje_actual, reinicios, False
+
+    # GANÓ EL NIVEL
+    print(f"\n🎉 ¡Nivel {nivel} superado! Puntaje: {puntaje_actual}")
+    return puntaje_actual, reinicios, True
 
 
 # ================= FUNCIONES DE USUARIO =================
 
 def inicializar_estadisticas_usuario(nombre_usuario: str, usuarios: dict, ruta: str) -> None:
     encontrado = False
+    datos_usuario = None
+
     for nombre in usuarios:
         if nombre == nombre_usuario:
             encontrado = True
@@ -108,27 +118,39 @@ def inicializar_estadisticas_usuario(nombre_usuario: str, usuarios: dict, ruta: 
             break
 
     if encontrado:
-        estadisticas_necesarias = ["partidas_jugadas", "palabras_acertadas", "palabras_erradas",
-                                   "victorias", "derrotas", "puntos"]
+        estadisticas_necesarias = [
+            "partidas_jugadas", "palabras_acertadas", "palabras_erradas",
+            "victorias", "derrotas", "puntos"
+        ]
 
-        for nombre_estadistica in estadisticas_necesarias:
-            if nombre_estadistica not in datos_usuario:
-                datos_usuario[nombre_estadistica] = 0
+        for estadistica in estadisticas_necesarias:
+            existe = False
+            for clave in datos_usuario:
+                if clave == estadistica:
+                    existe = True
+                    break
+
+            if not existe:
+                datos_usuario[estadistica] = 0
 
         guardar_usuarios(usuarios, ruta)
 
 
 def finalizar_juego(nombre_usuario: str, usuarios: dict, ruta: str, nivel: int, puntaje: int) -> None:
-    if nombre_usuario in usuarios:
-        estadisticas = usuarios[nombre_usuario]  # antes stats
-        if nivel > 5:
-            estadisticas["victorias"] += 1
-            print(f"\n🏆 ¡Felicitaciones {nombre_usuario}, ganaste la partida!")
-        else:
-            estadisticas["derrotas"] += 1
-            print(f"\n💀 {nombre_usuario}, perdiste esta vez.")
-        estadisticas["puntos"] += puntaje
-        guardar_usuarios(usuarios, ruta)
+    for usuario in usuarios:
+        if usuario == nombre_usuario:
+            estadisticas = usuarios[usuario]
+
+            if nivel > 5:
+                estadisticas["victorias"] += 1
+                print(f"\n🏆 ¡Felicitaciones {nombre_usuario}, ganaste la partida!")
+            else:
+                estadisticas["derrotas"] += 1
+                print(f"\n💀 {nombre_usuario}, perdiste esta vez.")
+
+            estadisticas["puntos"] += puntaje
+            guardar_usuarios(usuarios, ruta)
+            break
 
     print(f"\n🏁 Juego terminado. Puntaje final: {puntaje}")
 
@@ -151,22 +173,23 @@ def inicializar_estado_juego(vidas_iniciales: int = 3) -> tuple:
     return reinicios, nivel, puntaje, continuar, vidas, comodines_jugador
 
 
-def ejecutar_juego(nombre_usuario: str, usuarios: dict, ruta: str, vidas: int, reinicios: int, nivel: int,
-                   puntaje: int, comodines_jugador: dict) -> tuple:
-    continuar = True
+def ejecutar_juego(nombre_usuario: str, usuarios: dict, ruta: str, vidas: int,
+                   reinicios: int, nivel: int, puntaje: int, comodines_jugador: dict) -> tuple:
+
     nivel_actual = nivel
     puntaje_actual = puntaje
     reinicios_actual = reinicios
 
-    while nivel_actual <= 5 and reinicios_actual >= 0 and continuar:
+    while nivel_actual <= 5 and reinicios_actual >= 0:
         puntaje_actual, reinicios_actual, nivel_superado = jugar_nivel(
             nivel_actual, vidas, puntaje_actual, reinicios_actual, comodines_jugador
         )
 
+        if reinicios_actual < 0:
+            break
+
         if nivel_superado:
             nivel_actual += 1
-        elif reinicios_actual < 0:
-            continuar = False
 
     return nivel_actual, puntaje_actual
 
@@ -174,11 +197,14 @@ def ejecutar_juego(nombre_usuario: str, usuarios: dict, ruta: str, vidas: int, r
 # ================= FUNCIÓN PRINCIPAL =================
 
 def iniciar_juego(nombre_usuario: str, usuarios: dict, ruta: str, vidas: int = 3) -> None:
-    mostrar_encabezado_de_juego() 
+    mostrar_encabezado_de_juego()
     inicializar_estadisticas_usuario(nombre_usuario, usuarios, ruta)
+
     reinicios, nivel, puntaje, continuar, vidas, comodines_jugador = inicializar_estado_juego(vidas)
 
-    nivel, puntaje = ejecutar_juego(nombre_usuario, usuarios, ruta, vidas, reinicios, nivel,
-                                    puntaje, comodines_jugador)
+    nivel, puntaje = ejecutar_juego(
+        nombre_usuario, usuarios, ruta, vidas, reinicios, nivel,
+        puntaje, comodines_jugador
+    )
 
     finalizar_juego(nombre_usuario, usuarios, ruta, nivel, puntaje)
