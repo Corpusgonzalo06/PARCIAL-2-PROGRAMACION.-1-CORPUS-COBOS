@@ -8,7 +8,7 @@ from funciones_auxiliares import *
 from partidas import *
 import comodines
 
-
+import time
 # ================= FUNCIONES DE PALABRAS =================
 
 def obtener_palabras_del_nivel(nivel: int) -> list:
@@ -73,9 +73,11 @@ def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int, co
     puntaje_actual = puntaje
     partidas = 0
 
+    resultado = (puntaje_actual, reinicios, nivel_superado)  # variable de retorno única
+
     if len(palabras) == 0:
         print(f"⚠️ No hay palabras cargadas para el nivel {nivel}.")
-        return puntaje_actual, reinicios, nivel_superado
+        return resultado
 
     while partidas < 10 and vidas_actuales > 0:
         print(f"\n🏆 Palabra {partidas + 1} de 10")
@@ -88,21 +90,23 @@ def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int, co
         if vidas_actuales > 0:
             partidas += 1
 
-    # PERDIÓ TODAS LAS VIDAS
+    # Evaluar resultado final
     if vidas_actuales <= 0:
         print("\n💀 Perdiste todas las vidas.")
         reinicios -= 1
 
         if reinicios < 0:
             print(f"🚫 Fin del juego. Puntaje final: {puntaje_actual}")
-            return puntaje_actual, reinicios, False
+            resultado = (puntaje_actual, reinicios, False)
+        else:
+            print(f"🔁 Reiniciando nivel... Reinicios restantes: {reinicios}")
+            resultado = (puntaje_actual, reinicios, False)
+    else:
+        # GANÓ EL NIVEL
+        print(f"\n🎉 ¡Nivel {nivel} superado! Puntaje: {puntaje_actual}")
+        resultado = (puntaje_actual, reinicios, True)
 
-        print(f"🔁 Reiniciando nivel... Reinicios restantes: {reinicios}")
-        return puntaje_actual, reinicios, False
-
-    # GANÓ EL NIVEL
-    print(f"\n🎉 ¡Nivel {nivel} superado! Puntaje: {puntaje_actual}")
-    return puntaje_actual, reinicios, True
+    return resultado
 
 
 # ================= FUNCIONES DE USUARIO =================
@@ -196,15 +200,50 @@ def ejecutar_juego(nombre_usuario: str, usuarios: dict, ruta: str, vidas: int,
 
 # ================= FUNCIÓN PRINCIPAL =================
 
+
 def iniciar_juego(nombre_usuario: str, usuarios: dict, ruta: str, vidas: int = 3) -> None:
+
+    # =========================
+    # INICIO DEL TIEMPO
+    # =========================
+    inicio = time.time()
+
     mostrar_encabezado_de_juego()
     inicializar_estadisticas_usuario(nombre_usuario, usuarios, ruta)
 
     reinicios, nivel, puntaje, continuar, vidas, comodines_jugador = inicializar_estado_juego(vidas)
 
     nivel, puntaje = ejecutar_juego(
-        nombre_usuario, usuarios, ruta, vidas, reinicios, nivel,
-        puntaje, comodines_jugador
+        nombre_usuario, usuarios, ruta, vidas,
+        reinicios, nivel, puntaje, comodines_jugador
     )
 
+    # =========================
+    # FIN DEL TIEMPO
+    # =========================
+    fin = time.time()
+    tiempo_total = fin - inicio
+
+    print(f"\n🕒 Tiempo total jugado: {tiempo_total:.2f} segundos")
+
+    # =========================
+    # GUARDAR TIEMPO TOTAL
+    # =========================
+    clave_existente = False
+
+    for clave in usuarios[nombre_usuario]:
+        if clave == "tiempo_total":
+            clave_existente = True
+            break
+
+    # Si no existía, inicializamos
+    if not clave_existente:
+        usuarios[nombre_usuario]["tiempo_total"] = 0
+
+    usuarios[nombre_usuario]["tiempo_total"] += tiempo_total
+    guardar_usuarios(usuarios, ruta)
+
+    # =========================
+    # FINALIZAR JUEGO
+    # =========================
     finalizar_juego(nombre_usuario, usuarios, ruta, nivel, puntaje)

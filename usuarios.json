@@ -1,66 +1,12 @@
 {
-    "f": {
-        "contrase\u00f1a": "f",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 2,
-        "puntaje_maximo": 0,
-        "puntos": 24
-    },
-    "r": {
-        "contrase\u00f1a": "r",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0
-    },
-    "3": {
-        "contrase\u00f1a": "3",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0
-    },
-    "2": {
-        "contrase\u00f1a": "2",
+    "gonzalo": {
+        "contrase\u00f1a": "gonzalo",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
         "victorias": 0,
         "derrotas": 1,
-        "puntos": 6
-    },
-    "1": {
-        "contrase\u00f1a": "1",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 1,
-        "puntos": 12
-    },
-    "t": {
-        "contrase\u00f1a": "t",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0
-    },
-    "m": {
-        "contrase\u00f1a": "m",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 1,
-        "puntos": 13
+        "puntos": 22,
+        "tiempo_total": 39.8412868976593
     }
 }
