@@ -92,7 +92,7 @@ def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int, co
 
     # Evaluar resultado final
     if vidas_actuales <= 0:
-        print("\n💀 Perdiste todas las vidas.")
+        print("\n💀 Ya no te quedan vidas.")
         reinicios -= 1
 
         if reinicios < 0:
@@ -103,7 +103,7 @@ def jugar_nivel(nivel: int, vidas_totales: int, puntaje: int, reinicios: int, co
             resultado = (puntaje_actual, reinicios, False)
     else:
         # GANÓ EL NIVEL
-        print(f"\n🎉 ¡Nivel {nivel} superado! Puntaje: {puntaje_actual}")
+        print(f"\n🎉 ¡Nivel {nivel} superado! Puntaje acomulado: {puntaje_actual}")
         resultado = (puntaje_actual, reinicios, True)
 
     return resultado
@@ -150,13 +150,13 @@ def finalizar_juego(nombre_usuario: str, usuarios: dict, ruta: str, nivel: int, 
                 print(f"\n🏆 ¡Felicitaciones {nombre_usuario}, ganaste la partida!")
             else:
                 estadisticas["derrotas"] += 1
-                print(f"\n💀 {nombre_usuario}, perdiste esta vez.")
+                print(f"\n💀  Perdiste {nombre_usuario}, volve a intentarlo mas tarde .")
 
             estadisticas["puntos"] += puntaje
             guardar_usuarios(usuarios, ruta)
             break
 
-    print(f"\n🏁 Juego terminado. Puntaje final: {puntaje}")
+  
 
 
 # ================= FUNCIONES DE ESTADO =================
