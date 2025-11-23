@@ -1,71 +1,117 @@
 # validaciones.py
-from palabras import PALABRAS_POR_NIVEL
-from mis_funciones import * 
+from mis_funciones import crear_mi_separador , convertir_a_minusculas
+# ===========================
+# VALIDAR PALABRA INGRESADA
+# ===========================
+def validar_palabra_ingresada(palabra_ingresada, palabra_correcta):
+    # Convertir a minúsculas y quitar espacios/tabulaciones manualmente
+    palabra_procesada = ""
+    for char in palabra_ingresada:
+        if char != " " and char != "\t":
+            # convertir mayúsculas a minúsculas
+            codigo = ord(char)
+            if 65 <= codigo <= 90:
+                palabra_procesada += chr(codigo + 32)
+            else:
+                palabra_procesada += char
 
-def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> bool:
-    """
-    Verifica si la palabra ingresada coincide con la palabra correcta,
-    sin diferenciar mayúsculas/minúsculas.
+    palabra_objetivo = ""
+    for char in palabra_correcta:
+        if char != " " and char != "\t":
+            codigo = ord(char)
+            if 65 <= codigo <= 90:
+                palabra_objetivo += chr(codigo + 32)
+            else:
+                palabra_objetivo += char
 
-    PARAMETROS:
-    palabra_ingresada (str): Palabra escrita por el jugador.
-    palabra_correcta (str): Palabra que se espera adivinar.
+    resultado = True
 
-    DEVUELVE:
-    bool: True si coinciden, False si no o si la entrada está vacía.
-    """
-    resultado = False
-    vacia = True
-
-    # Verificar si la palabra ingresada no está vacía
-    for i in range(len(palabra_ingresada)):
-        if palabra_ingresada[i] != " " and palabra_ingresada[i] != "\n" and palabra_ingresada[i] != "\t":
-            vacia = False
-
-    if vacia:
+    if palabra_procesada == "":
         print("⚠️ No ingresaste ninguna palabra.")
+        resultado = False
     else:
-        # Convertimos ambas palabras a minúsculas antes de comparar
-        if convertir_a_minusculas(palabra_ingresada) == convertir_a_minusculas(palabra_correcta):
-            resultado = True
-        else:
+        if len(palabra_procesada) != len(palabra_objetivo):
             resultado = False
+        else:
+            for i in range(len(palabra_procesada)):
+                if palabra_procesada[i] != palabra_objetivo[i]:
+                    resultado = False
+                    break
 
     return resultado
 
+# ===========================
+# VALIDAR LETRAS USADAS
+# ===========================
+def validar_letras_usadas(palabra_ingresada, letras_disponibles):
+    # Convertir palabra a minúsculas y quitar espacios
+    palabra_procesada = ""
+    for char in palabra_ingresada:
+        if char != " " and char != "\t":
+            codigo = ord(char)
+            if 65 <= codigo <= 90:
+                palabra_procesada += chr(codigo + 32)
+            else:
+                palabra_procesada += char
 
-def validar_letras_usadas(palabra_ingresada: str, letras_disponibles: list) -> bool:
-    """
-    Verifica que todas las letras de la palabra ingresada estén disponibles en la lista de letras,
-    sin diferenciar mayúsculas/minúsculas.
+    # Crear copia manual de letras disponibles en minúsculas
+    letras_procesadas = []
+    for letra in letras_disponibles:
+        codigo = ord(letra)
+        if 65 <= codigo <= 90:
+            letras_procesadas.append(chr(codigo + 32))
+        else:
+            letras_procesadas.append(letra)
 
-    PARAMETROS:
-    palabra_ingresada (str): Palabra que el jugador escribió.
-    letras_disponibles (list): Lista de letras que se pueden usar.
+    resultado = True
 
-    DEVUELVE:
-    bool: True si todas las letras están disponibles, False si alguna no lo está.
-    """
-    palabra_valida = True
-    palabra_minuscula = convertir_a_minusculas(palabra_ingresada)
-    letras_copia = convertir_lista_a_minusculas(letras_disponibles)
+    for letra in palabra_procesada:
+        encontrada = False
+        for i in range(len(letras_procesadas)):
+            if letras_procesadas[i] == letra:
+                encontrada = True
+                letras_procesadas[i] = ""  # "remover" letra manualmente
+                break
+        if not encontrada:
+            print(f"⚠️ La letra '{letra}' no está disponible.")
+            resultado = False
+            break
 
+    return resultado
+
+def validar_palabra(palabra, lista, usadas):
+    # Simular strip usando crear_mi_separador
+    partes = crear_mi_separador(palabra, " ")
+
+    palabra_limpia = ""
     i = 0
-    while i < len(palabra_minuscula) and palabra_valida:
-        letra_actual = palabra_minuscula[i]
-        letra_encontrada = False
-
-        j = 0
-        while j < len(letras_copia) and not letra_encontrada:
-            if letra_actual == letras_copia[j]:
-                letras_copia[j] = "✔"
-                letra_encontrada = True
-            j += 1
-
-        if not letra_encontrada:
-            print("⚠️ La letra", letra_actual, "no está disponible.")
-            palabra_valida = False
-
+    while i < len(partes):
+        if partes[i] != "":     # si no está vacío
+            palabra_limpia = partes[i]
         i += 1
 
-    return palabra_valida
+    palabra_limpia = convertir_a_minusculas(palabra_limpia)
+
+    # Buscar si está en la lista
+    encontrada = False
+    i = 0
+    while i < len(lista):
+        if lista[i] == palabra_limpia:
+            encontrada = True
+        i += 1
+
+    # Buscar si ya fue usada
+    usada = False
+    i = 0
+    while i < len(usadas):
+        if usadas[i] == palabra_limpia:
+            usada = True
+        i += 1
+
+    # Valor final con un solo return
+    es_valida = False
+    if encontrada:
+        if not usada:
+            es_valida = True
+
+    return es_valida

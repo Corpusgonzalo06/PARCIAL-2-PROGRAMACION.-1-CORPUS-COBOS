@@ -1,12 +1,50 @@
 {
-    "gonzalo": {
-        "contrase\u00f1a": "gonzalo",
+    "messi": {
+        "contraseña": "messi",
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,
         "palabras_erradas": 0,
         "victorias": 0,
-        "derrotas": 4,
-        "puntos": 38,
-        "tiempo_total": 165.71755290031433
+        "derrotas": 0,
+        "puntos": 0,
+        "tiempo_total": 0,
+        "tiempo_total_juego": 0,
+        "errores_totales_juego": 0
+    },
+    "maria": {
+        "contraseña": "virgen",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 0,
+        "tiempo_total": 0,
+        "tiempo_total_juego": 0,
+        "errores_totales_juego": 0
+    },
+    "tito": {
+        "contraseña": "tito",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 0,
+        "tiempo_total": 0,
+        "tiempo_total_juego": 0,
+        "errores_totales_juego": 0
+    },
+    "gonza": {
+        "contraseña": "gonza",
+        "partidas_jugadas": 0,
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 0,
+        "tiempo_total": 0,
+        "tiempo_total_juego": 0,
+        "errores_totales_juego": 0
     }
 }

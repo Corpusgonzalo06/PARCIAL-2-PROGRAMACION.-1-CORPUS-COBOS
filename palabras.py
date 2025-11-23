@@ -1,37 +1,50 @@
-#palabras.py
-PALABRAS_POR_NIVEL = {
-    1: [  # Naturaleza
-        "sol", "luna", "cielo", "nube", "mar", "rio", "flor", "arbol", "hoja", "montaña",
-        "lago", "arena", "viento", "roca", "fuego", "hielo", "nieve", "campo", "olas", "valle",
-        "bosque", "lluvia", "trueno", "relampago", "tierra", "semilla", "planta", "fruta", "hierba", "desierto",
-        "cascada", "tormenta", "isla", "volcan", "ocaso", "amanecer", "cieloazul", "mundo", "fluvial", "naturaleza"
-    ],
+# palabras.py
+# Diccionario de palabras base y todas las palabras que se pueden formar con sus letras (sin acentos)
+# Versión extendida
 
-    2: [  # Animales
-        "gato", "perro", "raton", "pez", "pato", "leon", "tigre", "caballo", "oveja", "zorro",
-        "lobo", "vaca", "cabra", "burro", "conejo", "delfin", "aguila", "gorila", "pinguino", "elefante",
-        "tortuga", "serpiente", "ardilla", "camello", "rinoceronte", "jirafa", "cocodrilo", "canguro", "foca", "gallina",
-        "pollo", "gaviota", "caracol", "mariposa", "abeja", "mosca", "araña", "caballito", "buho", "castor"
+PALABRAS = {
+    "colegio": [
+        "colegio", "gol", "lego", "cielo", "eco", "gel", "leo", "coi", "geo", "ego", "liceo",
+        "col", "eco", "oleo", "ico", "lie", "lice", "logo"
     ],
-
-    3: [  # Objetos
-        "mesa", "silla", "puerta", "ventana", "pared", "vaso", "cuaderno", "lapiz", "libro", "cuchillo",
-        "cuchara", "plato", "televisor", "celular", "reloj", "botella", "billetera", "zapato", "llave", "mochila",
-        "auricular", "camara", "cuadro", "linterna", "escoba", "bolsa", "gafas", "pantalon", "camisa", "chaqueta",
-        "almohada", "colchon", "sabana", "cortina", "heladera", "microondas", "horno", "espejo", "candado", "barra"
+    "trompa": [
+        "trompa", "ramo", "toma", "pronto", "roma", "pato", "ropa", "mat", "top", "tor", "rap",
+        "amo", "pro", "tam", "pat", "art", "ram", "port"
     ],
-
-    4: [  # Tecnología
-        "computadora", "teclado", "pantalla", "mouse", "cable", "procesador", "monitor", "impresora", "router", "servidor",
-        "internet", "archivo", "programa", "juego", "celular", "tablet", "memoria", "disco", "bateria", "sistema",
-        "red", "conexion", "microchip", "datos", "usb", "placa", "sensor", "antena", "altavoz", "microfono",
-        "camara", "nube", "proyector", "dron", "smartphone", "laptop", "software", "hardware", "basededatos", "pantallaled"
+    "barato": [
+        "barato", "bar", "aro", "tara", "bata", "rato", "bota", "at", "tab", "obra", "bot",
+        "rat", "bat", "ta", "ba", "ar", "tor", "abo"
     ],
-
-    5: [  # Nivel experto - Programación / informática
-        "programacion", "algoritmo", "variable", "funcion", "compilador", "codigo", "modulo", "argumento", "bucle", "operador",
-        "python", "javascript", "biblioteca", "parametro", "estructura", "constante", "entorno", "debug", "objeto", "lista",
-        "diccionario", "clase", "herencia", "modularidad", "proyecto", "sintaxis", "dependencia", "controlador", "interfaz", "servidorweb",
-        "json", "csv", "basededatos", "framework", "almacenamiento", "iteracion", "recurrencia", "comentario", "funcional", "binarytree"
+    "amigos": [
+        "amigos", "goma", "migo", "amo", "gamos", "som", "si", "ami", "mag", "gas", "aim",
+        "oma", "ma", "go", "as", "mi"
+    ],
+    "laptop": [
+        "laptop", "top", "lap", "pot", "pal", "tap", "alto", "palo", "lot", "tap", "pat",
+        "plot", "op", "al", "po", "lapto"
+    ],
+    "comput": [
+        "comput", "put", "com", "toc", "cup", "tom", "cot", "cop", "mot", "up", "mu", "to",
+        "om", "cu", "pom", "tom"
+    ],
+    "reloj": [
+        "reloj", "jor", "rej", "leo", "roj", "lo", "or", "er", "je", "ol", "re", "oe",
+        "roj", "le", "jo"
+    ],
+    "telefono": [
+        "telefono", "tel", "fono", "leo", "tono", "le", "no", "lon", "eon", "lot", "ten",
+        "neo", "one", "net", "ole", "ton", "fon", "fen"
+    ],
+    "escolar": [
+        "escolar", "sol", "cola", "los", "rol", "sale", "sal", "col", "la", "al", "se", "ar",
+        "saco", "rosa", "losa", "alce"
+    ],
+    "computar": [
+        "computar", "com", "put", "tor", "rap", "rat", "cup", "taco", "mat", "cam", "tau",
+        "par", "map", "tap", "at", "arc"
+    ],
+    "biblioteca": [
+        "biblioteca", "biblio", "teca", "libro", "cote", "cable", "bota", "cita", "ace",
+        "tal", "bot", "bic", "ble", "bicote", "lote"
     ]
 }

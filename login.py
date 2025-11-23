@@ -2,47 +2,43 @@ from usuarios import guardar_usuarios
 from estadisticas import inicializar_estadisticas
 
 def registrar_usuario(usuarios: dict, ruta: str) -> dict:
-    resultado = usuarios
-    nombre = input("Ingrese su nombre de usuario: ")
-    usuario_existe = False
+    nombre = input("Ingrese su nombre de usuario: ").strip()
 
-    for usuario_actual in usuarios:
-        if usuario_actual == nombre:
-            usuario_existe = True
-            break
-
-    if usuario_existe:
+    if nombre in usuarios:
         print("⚠️ El usuario ya existe.")
-    else:
-        contraseña = input("Ingrese su contraseña: ")
-        usuarios[nombre] = {"contraseña": contraseña}
-        inicializar_estadisticas(usuarios[nombre])
-        guardar_usuarios(usuarios, ruta)
-        print(f"✅ Usuario {nombre} registrado correctamente.")
-        resultado = usuarios
+        return usuarios
 
-    return resultado
+    contraseña = input("Ingrese su contraseña: ").strip()
+
+    usuarios[nombre] = {
+        "contraseña": contraseña
+    }
+
+    # Inicializo estadísticas de manera segura
+    inicializar_estadisticas(usuarios[nombre])
+    guardar_usuarios(usuarios, ruta)
+
+    print(f"✅ Usuario {nombre} registrado correctamente.")
+    return usuarios
 
 
-def iniciar_sesion(usuarios: dict) -> str | None:
-    nombre_usuario = None
-    nombre = input("Ingrese su nombre de usuario: ")
-    usuario_encontrado = False
+def iniciar_sesion(usuarios: dict) -> tuple:
+    nombre = input("Ingrese su nombre de usuario: ").strip()
 
-    for usuario_actual in usuarios:
-        if usuario_actual == nombre:
-            usuario_encontrado = True
-            break
-
-    if not usuario_encontrado:
+    if not nombre or nombre not in usuarios:
         print("❌ Usuario no encontrado.")
-    else:
-        contraseña = input("Ingrese su contraseña: ")
-        if usuarios[nombre]["contraseña"] != contraseña:
-            print("❌ Contraseña incorrecta.")
-        else:
-            inicializar_estadisticas(usuarios[nombre])
-            print("✅ Inicio de sesión exitoso.")
-            nombre_usuario = nombre
-            
-    return nombre_usuario
+        return None, None
+
+    contraseña = input("Ingrese su contraseña: ").strip()
+
+    if usuarios[nombre]["contraseña"] != contraseña:
+        print("❌ Contraseña incorrecta.")
+        return None, None
+
+    # Inicializo estadísticas solo si no existen para no sobreescribir datos
+    if "puntos" not in usuarios[nombre]:
+        inicializar_estadisticas(usuarios[nombre])
+
+    usuario = usuarios[nombre]
+    print("✅ Inicio de sesión exitoso.")
+    return usuario, nombre

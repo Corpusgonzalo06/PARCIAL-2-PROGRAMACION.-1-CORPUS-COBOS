@@ -1,41 +1,50 @@
+# usuarios.py
 import json
 
-def cargar_usuarios(ruta: str) -> dict:
+# ===========================
+# FUNCIONES DE USUARIOS
+# ===========================
+
+def cargar_usuarios(ruta):
     """
     Carga los usuarios desde un archivo JSON.
-
-    PARAMETROS:
-    ruta (str) -> Ruta del archivo JSON donde se almacenan los usuarios.
-
-    DEVUELVE:
-    dict -> Diccionario con los usuarios. 
-    Si el archivo no existe o está vacío, devuelve un diccionario vacío.
+    Devuelve un diccionario vacío si el archivo no existe o está corrupto.
     """
     usuarios = {}
+
     try:
         with open(ruta, "r", encoding="utf-8") as archivo:
             usuarios = json.load(archivo)
+
     except FileNotFoundError:
-        print("Archivo no encontrado.")
+        print("⚠️ Archivo de usuarios no encontrado. Se creará uno nuevo al guardar.")
     except json.JSONDecodeError:
-        print("Archivo vacío o corrupto.")
-    
+        print("⚠️ Archivo de usuarios vacío o corrupto. Se creará uno nuevo al guardar.")
+    except Exception as error:
+        print(f"⚠️ Error inesperado al cargar usuarios: {error}")
+
     return usuarios
 
 
-def guardar_usuarios(usuarios: dict, ruta: str) -> None:
+def guardar_usuarios(usuario_actual, ruta):
     """
-    Guarda los usuarios en un archivo JSON.
-
-    PARAMETROS:
-    usuarios (dict) -> Diccionario con los datos de los usuarios a guardar.
-    ruta (str) -> Ruta del archivo JSON donde se guardarán los usuarios.
-
-    DEVUELVE:
-    None -> No devuelve ningún valor, solo guarda los datos en el archivo indicado.
+    Guarda o actualiza un usuario sin borrar los demás.
+    usuario_actual = dict con una sola clave: { "gonza": {...} }
     """
     try:
+        # 1️⃣ Cargar todos los usuarios existentes
+        try:
+            with open(ruta, "r", encoding="utf-8") as archivo:
+                todos_usuarios = json.load(archivo)
+        except (FileNotFoundError, json.JSONDecodeError):
+            todos_usuarios = {}
+
+        # 2️⃣ Actualizar solo el usuario que viene
+        todos_usuarios.update(usuario_actual)
+
+        # 3️⃣ Guardar todo de nuevo
         with open(ruta, "w", encoding="utf-8") as archivo:
-            json.dump(usuarios, archivo, indent=4)
-    except Exception as error_al_guardar_archivo:
-        print(f"No se pudo guardar el archivo: {error_al_guardar_archivo}")
+            json.dump(todos_usuarios, archivo, indent=4, ensure_ascii=False)
+
+    except Exception as error:
+        print(f"⚠️ No se pudo guardar el archivo: {error}")

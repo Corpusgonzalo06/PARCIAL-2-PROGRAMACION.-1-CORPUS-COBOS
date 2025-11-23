@@ -86,3 +86,40 @@ def copiar_lista(lista_original: list) -> list:
         nueva_lista = nueva_lista + [lista_original[i]]
         i += 1
     return nueva_lista
+
+
+def agregar_elemento(lista: list, elemento) -> list:
+    """
+    Devuelve una nueva lista con el elemento agregado al final,
+    sin usar append() ni métodos de listas.
+    """
+    nueva = []
+    i = 0
+
+    # copiar los elementos existentes
+    while i < len(lista):
+        nueva = nueva + [lista[i]]
+        i += 1
+
+    # agregar el nuevo elemento
+    nueva = nueva + [elemento]
+
+    return nueva
+
+
+
+
+
+def convertir_a_entero(texto: str) -> int:
+    """
+    Convierte un texto numérico a entero sin usar int().
+    """
+    numero = 0
+    i = 0
+
+    while i < len(texto):
+        digito = ord(texto[i]) - ord('0')   # Convierte carácter → número
+        numero = numero * 10 + digito
+        i += 1
+
+    return numero
