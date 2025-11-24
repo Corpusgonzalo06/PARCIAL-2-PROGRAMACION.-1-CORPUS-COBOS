@@ -1,7 +1,7 @@
 # funciones_auxiliares.py
-import random
 from palabras import PALABRAS
 from mis_funciones import agregar_elemento, copiar_lista
+import random 
 
 
 # ===========================
@@ -9,66 +9,64 @@ from mis_funciones import agregar_elemento, copiar_lista
 # ===========================
 
 def mostrar_encabezado_de_juego() -> None:
+    """
+    Muestra el título del juego en pantalla.
+
+    Parámetros:
+    - Ninguno.
+
+    Retorno:
+    - None: Solo imprime texto en pantalla.
+    """
     print("\n")
     print("==============================================")
     print("🎮 BIENVENIDO A 'PALABRAS EN PALABRA' 🎮")
     print("==============================================")
     print("🔥 OBJETIVO: formar palabras correctas usando")
-    print("   las letras mezcladas que se te muestran.\n")
-
+    print("   las letras que se te muestran.\n")
 
 def mostrar_encabezado_de_nivel(nivel: int) -> None:
+    """
+    Imprime por pantalla el encabezado del nivel actual.
+
+    Parámetros:
+    - nivel (int): Número del nivel a mostrar.
+
+    Retorno:
+    - None: Solo imprime texto en pantalla.
+    """
     print(f"\n========== NIVEL {nivel} ==========")
-
-
-# ===========================
-# FUNCIONES DE PALABRAS
-# ===========================
-
-def mezclar_lista(lista: list) -> list:
-    """
-    Mezcla una lista usando random.shuffle pero sin métodos de lista.
-    """
-    copia = copiar_lista(lista)
-    random.shuffle(copia)
-    return copia
-
-
-def preparar_palabra_desordenada(palabra: str) -> list:
-    """
-    Convierte palabra → lista y la mezcla.
-    Sin join, sin append.
-    """
-    letras = []
-    i = 0
-    while i < len(palabra):
-        letras = agregar_elemento(letras, palabra[i])
-        i += 1
-
-    return mezclar_lista(letras)
-
 
 def mostrar_letras(letras: list) -> None:
     """
-    Muestra las letras sin usar join().
+    Muestra en pantalla la lista de letras que forman la palabra base.
+
+    Parámetros:
+    - letras (list): Lista de caracteres individuales.
+
+    Retorno:
+    - None: Solo imprime las letras en pantalla.
     """
-    print("\n🔠 Letras disponibles:")
+    print("\n🔠 PALABRA INICIAL :")
     i = 0
     while i < len(letras):
         print(letras[i], end=" ")
         i += 1
     print("\n------------------------------")
 
-
-# ===========================
-# FUNCIONES PARA NIVELES
-# ===========================
 def obtener_palabras_del_nivel(nivel: int) -> dict:
     """
-    Devuelve un diccionario con:
-    - palabra_base
-    - letras_desordenadas
-    - palabras_validas
+    Selecciona aleatoriamente una palabra base del diccionario PALABRAS
+    y devuelve toda la información necesaria para jugar un nivel.
+
+    Parámetros:
+    - nivel (int): Nivel actual del juego (no afecta la lógica, solo se recibe).
+
+    Retorno:
+    - dict: Diccionario con:
+        - "palabra_base" (str): Palabra principal elegida.
+        - "letras" (list): Letras de la palabra base en orden.
+        - "validas" (list): Lista de palabras válidas que se pueden formar.
     """
     
     # crear lista de claves sin usar keys()
@@ -84,10 +82,10 @@ def obtener_palabras_del_nivel(nivel: int) -> dict:
     # obtener palabras válidas
     palabras_validas = PALABRAS[palabra_base]
 
-    # generar letras desordenadas
-    letras = preparar_palabra_desordenada(palabra_base)
+    # generar letras en orden real
+    letras = list(palabra_base)
 
-    # retornar en un diccionario como quiere tu profe
+    # retornar en un diccionario
     resultado = {
         "palabra_base": palabra_base,
         "letras": letras,

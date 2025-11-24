@@ -1,14 +1,19 @@
-# usuarios.py
 import json
 
 # ===========================
 # FUNCIONES DE USUARIOS
 # ===========================
 
-def cargar_usuarios(ruta):
+def cargar_usuarios(ruta: str) -> dict:
     """
     Carga los usuarios desde un archivo JSON.
-    Devuelve un diccionario vacío si el archivo no existe o está corrupto.
+
+    Parámetros:
+        ruta (str): Ruta del archivo JSON que contiene los usuarios.
+
+    Retorna:
+        dict: Diccionario con los usuarios cargados. 
+              Devuelve un diccionario vacío si el archivo no existe o está corrupto.
     """
     usuarios = {}
 
@@ -26,10 +31,16 @@ def cargar_usuarios(ruta):
     return usuarios
 
 
-def guardar_usuarios(usuario_actual, ruta):
+def guardar_usuarios(usuario_actual: dict, ruta: str) -> None:
     """
     Guarda o actualiza un usuario sin borrar los demás.
-    usuario_actual = dict con una sola clave: { "gonza": {...} }
+
+    Parámetros:
+        usuario_actual (dict): Diccionario con un solo usuario. Ejemplo: {"gonza": {...}}
+        ruta (str): Ruta del archivo JSON donde se guardan los usuarios.
+
+    Retorna:
+        None
     """
     try:
         # 1️⃣ Cargar todos los usuarios existentes
@@ -48,3 +59,30 @@ def guardar_usuarios(usuario_actual, ruta):
 
     except Exception as error:
         print(f"⚠️ No se pudo guardar el archivo: {error}")
+
+
+def inicializar_datos_usuario(usuario: dict) -> dict:
+    """
+    Inicializa las estadísticas y datos de un usuario.
+
+    Parámetros:
+        usuario (dict): Diccionario del usuario donde se agregarán los datos.
+
+    Retorna:
+        dict: Usuario actualizado con los datos inicializados.
+    """
+    datos = {
+        "palabras_acertadas": 0,
+        "palabras_erradas": 0,
+        "puntos": 0,
+        "errores_totales_juego": 0,
+        "tiempo_total_juego": 0,
+        "partidas_jugadas": 0,
+        "victorias": 0,
+        "derrotas": 0
+    }
+
+    for clave in datos:
+        usuario[clave] = datos[clave]
+
+    return usuario

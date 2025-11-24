@@ -5,9 +5,15 @@ from mis_funciones import *
 # ===========================
 
 
-def revelar_palabra(lista_palabras: list) -> None:
+def revelar_palabras(lista_palabras: list) -> None:
     """
-    Muestra por pantalla todas las palabras posibles sin usar join().
+    Esta función muestra por pantalla todas las palabras posibles.
+
+    PARÁMETROS:
+        lista_palabras (list): Lista que contiene todas las palabras válidas del nivel.
+
+    RETORNO:
+        None: No retorna nada, solo imprime en pantalla.
     """
     texto = ""
     i = 0
@@ -22,7 +28,14 @@ def revelar_palabra(lista_palabras: list) -> None:
 
 def eliminar_restricciones(vidas: int) -> int:
     """
-    Devuelve la cantidad de vidas sin modificarlas, pero mostrando el mensaje.
+    Esta función informa que no se descontará vida en el próximo intento.
+    Devuelve la misma cantidad de vidas sin modificarlas.
+
+    PARÁMETROS:
+        vidas (int): Cantidad de vidas actuales del jugador.
+
+    RETORNO:
+        int: Las vidas sin modificar.
     """
     print("🚀 Restricciones eliminadas. Tenés un intento libre sin perder vida.")
     vidas_actualizadas = vidas
@@ -31,21 +44,36 @@ def eliminar_restricciones(vidas: int) -> int:
 
 def dar_pista_extra(palabra_base: str) -> None:
     """
-    Muestra la primera letra como pista, convertida a minúsculas.
+    Esta función muestra como pista la primera letra de la palabra base.
+
+    PARÁMETROS:
+        palabra_base (str): La palabra principal del nivel.
+
+    RETORNO:
+        None: Solo imprime la pista.
     """
     letra = palabra_base[0]
     letra_minuscula = convertir_a_minusculas(letra)
-    print("🕵️ Pista extra: la palabra empieza con '" + letra_minuscula + "'")
+    print("🕵️ Pista extra: Una palabra empieza con '" + letra_minuscula + "'")
 
 
 def usar_comodin(opcion: int, palabra_base: str, lista_palabras: list, vidas: int) -> int:
     """
-    Ejecuta el comodín elegido y devuelve la cantidad de vidas resultante.
+    Esta función ejecuta el comodín correspondiente al número elegido.
+
+    PARÁMETROS:
+        opcion (int): Número identificador del comodín.
+        palabra_base (str): Palabra principal del nivel.
+        lista_palabras (list): Lista de palabras válidas.
+        vidas (int): Cantidad de vidas del jugador antes de usar el comodín.
+
+    RETORNO:
+        int: Cantidad de vidas luego de aplicar el comodín.
     """
     vidas_actualizadas = vidas
 
     if opcion == 1:
-        revelar_palabra(lista_palabras)
+        revelar_palabras(lista_palabras)
 
     elif opcion == 2:
         vidas_actualizadas = eliminar_restricciones(vidas)
@@ -60,6 +88,16 @@ def usar_comodin(opcion: int, palabra_base: str, lista_palabras: list, vidas: in
 
 
 def validar_uso_comodin(texto_inicial: str) -> bool:
+    """
+    Esta función valida si el usuario desea usar un comodín,
+    aceptando únicamente las respuestas "si" o "no".
+
+    PARÁMETROS:
+        texto_inicial (str): Texto ingresado inicialmente por el usuario.
+
+    RETORNO:
+        bool: True si desea usar un comodín, False si no.
+    """
     usar_bandera = False
     respuesta_valida = False
     texto = convertir_a_minusculas(texto_inicial)
@@ -82,6 +120,16 @@ def validar_uso_comodin(texto_inicial: str) -> bool:
 
 
 def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
+    """
+    Esta función obtiene los nombres de los comodines que aún están disponibles.
+
+    PARÁMETROS:
+        comodines_jugador (dict): Diccionario donde cada clave es un comodín
+                                  y el valor es True (disponible) o False (usado).
+
+    RETORNO:
+        list: Lista con los nombres de los comodines que están disponibles.
+    """
     disponibles = []
 
     for nombre in comodines_jugador:
@@ -93,7 +141,14 @@ def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
 
 def mostrar_comodines(disponibles: list) -> None:
     """
-    Muestra los comodines disponibles numerados.
+    Esta función muestra en pantalla los comodines disponibles,
+    numerados en orden.
+
+    PARÁMETROS:
+        disponibles (list): Lista con los nombres de los comodines disponibles.
+
+    RETORNO:
+        None: Solo imprime la lista.
     """
     print("\n🎁 Comodines disponibles:")
     i = 0
@@ -107,7 +162,13 @@ def mostrar_comodines(disponibles: list) -> None:
 
 def es_numero_valido(texto: str) -> bool:
     """
-    Verifica si un texto está compuesto solo por dígitos.
+    Esta función determina si un texto contiene únicamente dígitos.
+
+    PARÁMETROS:
+        texto (str): Texto ingresado para validar.
+
+    RETORNO:
+        bool: True si todos los caracteres son dígitos, False en caso contrario.
     """
     valido = True
 
@@ -123,10 +184,16 @@ def es_numero_valido(texto: str) -> bool:
     return valido
 
 
-
 def leer_opcion_numerica(texto: str) -> int:
     """
-    Devuelve un entero válido o None si no es numérico.
+    Esta función convierte un texto numérico a entero.
+    Si el texto no es válido, devuelve None.
+
+    PARÁMETROS:
+        texto (str): Texto que representa un número entero.
+
+    RETORNO:
+        int | None: El número entero convertido, o None si no era válido.
     """
     resultado = None
     es_val = es_numero_valido(texto)
@@ -137,14 +204,22 @@ def leer_opcion_numerica(texto: str) -> int:
     return resultado
 
 
-
 def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras: list, vidas_actuales: int) -> int:
     """
-    Maneja el uso de comodines durante la partida.
-    Devuelve la cantidad de vidas actualizada con un único return.
+    Esta función controla toda la lógica del uso de comodines:
+    pregunta al jugador, muestra los disponibles y ejecuta el elegido.
+
+    PARÁMETROS:
+        comodines_jugador (dict): Diccionario con el estado de cada comodín.
+        palabra_base (str): Palabra principal del nivel.
+        lista_palabras (list): Lista de todas las palabras válidas.
+        vidas_actuales (int): Cantidad actual de vidas del jugador.
+
+    RETORNO:
+        int: Vidas actualizadas luego del uso del comodín (si se usó).
     """
 
-    resultado = vidas_actuales  # guardamos el valor final que vamos a retornar
+    resultado = vidas_actuales
 
     usar = validar_uso_comodin(input("¿Querés usar un comodín? (si/no): "))
 
@@ -162,7 +237,7 @@ def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras
             valido = True
             cantidad = len(disponibles)
 
-            if opcion is None:
+            if opcion == None:
                 print("⚠️ Entrada inválida.")
                 valido = False
             elif opcion < 1 or opcion > cantidad:
@@ -172,9 +247,42 @@ def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras
             if valido == True:
                 nombre = disponibles[opcion - 1]
                 comodines_jugador[nombre] = False
-                resultado = usar_comodin(opcion, palabra_base, lista_palabras, resultado)
+
+                if nombre == "revelar_palabras":
+                    opcion_comodin = 1
+                elif nombre == "eliminar_restricciones":
+                    opcion_comodin = 2
+                elif nombre == "pista_extra":
+                    opcion_comodin = 3
+                else:
+                    opcion_comodin = 0
+
+                resultado = usar_comodin(opcion_comodin, palabra_base, lista_palabras, resultado)
 
         else:
             print("⚠️ No te quedan comodines disponibles.")
 
     return resultado
+
+
+def crear_comodines_iniciales(valor=True):
+    """
+    Esta función crea el diccionario que contiene los comodines iniciales.
+
+    PARÁMETROS:
+        valor (bool): Valor inicial de cada comodín (True = disponible).
+
+    RETORNO:
+        dict: Diccionario con los nombres de los comodines y su disponibilidad.
+    """
+    revelar_palabras = valor
+    eliminar_restricciones = valor
+    pista_extra = valor
+
+    comodines = {
+        "revelar_palabras": revelar_palabras,
+        "eliminar_restricciones": eliminar_restricciones,
+        "pista_extra": pista_extra
+    }
+
+    return comodines

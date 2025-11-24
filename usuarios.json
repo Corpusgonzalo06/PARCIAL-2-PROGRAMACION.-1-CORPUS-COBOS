@@ -46,5 +46,29 @@
         "tiempo_total": 0,
         "tiempo_total_juego": 0,
         "errores_totales_juego": 0
+    },
+    "ronaldo": {
+        "contraseña": "ronaldo",
+        "partidas_jugadas": 5,
+        "palabras_acertadas": 2,
+        "palabras_erradas": 3,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 6,
+        "tiempo_total": 0,
+        "tiempo_total_juego": 127.50120162963867,
+        "errores_totales_juego": 3
+    },
+    "gonzalo": {
+        "contraseña": "gonzalo",
+        "partidas_jugadas": 4,
+        "palabras_acertadas": 1,
+        "palabras_erradas": 3,
+        "victorias": 0,
+        "derrotas": 0,
+        "puntos": 7,
+        "tiempo_total": 0,
+        "tiempo_total_juego": 191.3292248249054,
+        "errores_totales_juego": 3
     }
 }

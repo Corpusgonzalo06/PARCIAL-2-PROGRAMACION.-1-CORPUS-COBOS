@@ -1,14 +1,25 @@
-# validaciones.py
-from mis_funciones import crear_mi_separador , convertir_a_minusculas
+from mis_funciones import crear_mi_separador, convertir_a_minusculas, agregar_elemento
+
 # ===========================
 # VALIDAR PALABRA INGRESADA
 # ===========================
-def validar_palabra_ingresada(palabra_ingresada, palabra_correcta):
+
+def validar_palabra_ingresada(palabra_ingresada: str, palabra_correcta: str) -> bool:
+    """
+    Valida si la palabra ingresada coincide con la palabra correcta,
+    ignorando mayúsculas, espacios y tabulaciones.
+
+    Parámetros:
+        palabra_ingresada (str): Palabra ingresada por el usuario.
+        palabra_correcta (str): Palabra correcta que se debe validar.
+
+    Retorna:
+        bool: True si la palabra ingresada es correcta, False si no.
+    """
     # Convertir a minúsculas y quitar espacios/tabulaciones manualmente
     palabra_procesada = ""
     for char in palabra_ingresada:
         if char != " " and char != "\t":
-            # convertir mayúsculas a minúsculas
             codigo = ord(char)
             if 65 <= codigo <= 90:
                 palabra_procesada += chr(codigo + 32)
@@ -40,29 +51,35 @@ def validar_palabra_ingresada(palabra_ingresada, palabra_correcta):
 
     return resultado
 
+
 # ===========================
 # VALIDAR LETRAS USADAS
 # ===========================
-def validar_letras_usadas(palabra_ingresada, letras_disponibles):
+
+def validar_letras_usadas(palabra_ingresada: str, letras_disponibles: list) -> bool:
+    """
+    Valida si todas las letras de la palabra ingresada están disponibles
+    en la lista de letras disponibles, ignorando mayúsculas y espacios.
+
+    Parámetros:
+        palabra_ingresada (str): Palabra que el usuario quiere usar.
+        letras_disponibles (list): Lista de letras disponibles.
+
+    Retorna:
+        bool: True si todas las letras están disponibles, False si no.
+    """
     # Convertir palabra a minúsculas y quitar espacios
     palabra_procesada = ""
     for char in palabra_ingresada:
         if char != " " and char != "\t":
-            codigo = ord(char)
-            if 65 <= codigo <= 90:
-                palabra_procesada += chr(codigo + 32)
-            else:
-                palabra_procesada += char
+            palabra_procesada += convertir_a_minusculas(char)
 
-    # Crear copia manual de letras disponibles en minúsculas
+    # Crear copia de letras disponibles sin usar append
     letras_procesadas = []
     for letra in letras_disponibles:
-        codigo = ord(letra)
-        if 65 <= codigo <= 90:
-            letras_procesadas.append(chr(codigo + 32))
-        else:
-            letras_procesadas.append(letra)
+        letras_procesadas = agregar_elemento(letras_procesadas, convertir_a_minusculas(letra))
 
+    # Validar letra por letra
     resultado = True
 
     for letra in palabra_procesada:
@@ -70,8 +87,9 @@ def validar_letras_usadas(palabra_ingresada, letras_disponibles):
         for i in range(len(letras_procesadas)):
             if letras_procesadas[i] == letra:
                 encontrada = True
-                letras_procesadas[i] = ""  # "remover" letra manualmente
+                letras_procesadas[i] = ""   # removemos la letra usada
                 break
+
         if not encontrada:
             print(f"⚠️ La letra '{letra}' no está disponible.")
             resultado = False
@@ -79,14 +97,30 @@ def validar_letras_usadas(palabra_ingresada, letras_disponibles):
 
     return resultado
 
-def validar_palabra(palabra, lista, usadas):
+
+# ===========================
+# VALIDAR PALABRA GENERAL
+# ===========================
+
+def validar_palabra(palabra: str, lista: list, usadas: list) -> bool:
+    """
+    Valida si una palabra es válida según la lista de palabras permitidas
+    y si no ha sido usada previamente.
+
+    Parámetros:
+        palabra (str): Palabra a validar.
+        lista (list): Lista de palabras permitidas.
+        usadas (list): Lista de palabras ya usadas.
+
+    Retorna:
+        bool: True si la palabra es válida y no ha sido usada, False si no.
+    """
     # Simular strip usando crear_mi_separador
     partes = crear_mi_separador(palabra, " ")
-
     palabra_limpia = ""
     i = 0
     while i < len(partes):
-        if partes[i] != "":     # si no está vacío
+        if partes[i] != "":
             palabra_limpia = partes[i]
         i += 1
 
@@ -110,8 +144,7 @@ def validar_palabra(palabra, lista, usadas):
 
     # Valor final con un solo return
     es_valida = False
-    if encontrada:
-        if not usada:
-            es_valida = True
+    if encontrada and (not usada):
+        es_valida = True
 
     return es_valida

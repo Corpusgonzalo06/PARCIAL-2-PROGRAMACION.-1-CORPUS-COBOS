@@ -1,50 +1,48 @@
 # palabras.py
 # Diccionario de palabras base y todas las palabras que se pueden formar con sus letras (sin acentos)
 # Versión extendida
+# palabras.py
+# Diccionario de palabras base y todas las palabras que se pueden formar con sus letras (sin acentos)
+# Versión extendida
 
 PALABRAS = {
-    "colegio": [
-        "colegio", "gol", "lego", "cielo", "eco", "gel", "leo", "coi", "geo", "ego", "liceo",
-        "col", "eco", "oleo", "ico", "lie", "lice", "logo"
+    "ronaldo": [
+        "ronaldo", "ronda", "don", "lado", "ladrón", "ando", "don", "rol", "ado", "lado", "nora", "raro"
     ],
-    "trompa": [
-        "trompa", "ramo", "toma", "pronto", "roma", "pato", "ropa", "mat", "top", "tor", "rap",
-        "amo", "pro", "tam", "pat", "art", "ram", "port"
+    "arqueros": [
+        "arqueros", "arco", "queros", "rosa", "re", "ar", "queso", "raso", "raro", "rose"
     ],
-    "barato": [
-        "barato", "bar", "aro", "tara", "bata", "rato", "bota", "at", "tab", "obra", "bot",
-        "rat", "bat", "ta", "ba", "ar", "tor", "abo"
+    "arbitraje": [
+        "arbitraje", "arbitra", "jar", "tra", "bira", "arte", "riba",
     ],
-    "amigos": [
-        "amigos", "goma", "migo", "amo", "gamos", "som", "si", "ami", "mag", "gas", "aim",
-        "oma", "ma", "go", "as", "mi"
+    "centrocampista": [
+        "centrocampista", "centro", "campista", "centa", "pista", "mar", "pasto", "cima", "piso"
     ],
-    "laptop": [
-        "laptop", "top", "lap", "pot", "pal", "tap", "alto", "palo", "lot", "tap", "pat",
-        "plot", "op", "al", "po", "lapto"
+    "delanteros": [
+        "delanteros", "del", "latero", "alto", "roda", "sol", "dato"
     ],
-    "comput": [
-        "comput", "put", "com", "toc", "cup", "tom", "cot", "cop", "mot", "up", "mu", "to",
-        "om", "cu", "pom", "tom"
+    "falta": [
+        "falta", "alfa", "tal", "lat", "fa", "lata", "tala"
     ],
-    "reloj": [
-        "reloj", "jor", "rej", "leo", "roj", "lo", "or", "er", "je", "ol", "re", "oe",
-        "roj", "le", "jo"
+    "competicion": [
+        "competicion", "cometa", "pico", "cien", "once", "tiempo"
     ],
-    "telefono": [
-        "telefono", "tel", "fono", "leo", "tono", "le", "no", "lon", "eon", "lot", "ten",
-        "neo", "one", "net", "ole", "ton", "fon", "fen"
+    "libertadores": [
+        "libertadores", "libro", "tarde", "bote", "sol", "roda", "lote"
     ],
-    "escolar": [
-        "escolar", "sol", "cola", "los", "rol", "sale", "sal", "col", "la", "al", "se", "ar",
-        "saco", "rosa", "losa", "alce"
+    "instituciones": [
+        "instituciones", "instituto", "ciones", "tuno", "su", "in", "tino"
     ],
-    "computar": [
-        "computar", "com", "put", "tor", "rap", "rat", "cup", "taco", "mat", "cam", "tau",
-        "par", "map", "tap", "at", "arc"
+    "maradona": [
+        "maradona", "mara", "dona", "roma", "mano", "don", "amo"
     ],
-    "biblioteca": [
-        "biblioteca", "biblio", "teca", "libro", "cote", "cable", "bota", "cita", "ace",
-        "tal", "bot", "bic", "ble", "bicote", "lote"
+    "clubes": [
+        "clubes", "club", "bes", "sub", "blue"
+    ],
+    "romagnolli": [
+        "romagnolli", "roma", "lino", "gallo", "rollo", "ion"
+    ],
+    "gambetear": [
+        "gambetear", "gamba", "bete", "eta", "gear", "mar"
     ]
 }

@@ -5,12 +5,17 @@ from usuarios import guardar_usuarios
 # ============================================================
 # INICIALIZAR ESTADISTICAS DE UN USUARIO
 # ============================================================
-
 def inicializar_estadisticas(usuario_data: dict) -> None:
     """
-    Se asegura de que un usuario tenga todas las estadísticas necesarias.
-    """
+    Inicializa las estadísticas de un usuario si no existen.
 
+    Parámetros:
+    - usuario_data (dict): Diccionario del usuario donde se agregarán
+      las claves de estadísticas faltantes.
+
+    Retorno:
+    - None: No devuelve nada, solo modifica el diccionario recibido.
+    """
     claves_necesarias = {
         "partidas_jugadas": 0,
         "palabras_acertadas": 0,

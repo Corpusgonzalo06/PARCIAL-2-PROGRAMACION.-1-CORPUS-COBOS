@@ -4,92 +4,38 @@
 
 import random
 import time
-from mis_funciones import agregar_elemento, convertir_a_minusculas
+from mis_funciones import agregar_elemento, convertir_a_minusculas , desordenar_letras, seleccionar_palabra_y_lista
 import comodines
-from usuarios import cargar_usuarios, guardar_usuarios
+from usuarios import cargar_usuarios, guardar_usuarios , inicializar_datos_usuario
 from palabras import PALABRAS
 from funciones_auxiliares import mostrar_letras, mostrar_encabezado_de_juego, mostrar_encabezado_de_nivel
 from validaciones import validar_palabra
+from manejo_puntaje import calcular_puntos_por_palabra, sumar_puntos_por_acierto, sumar_error
 
-##########################
-# FUNCIONES DE USUARIO
-##########################
-
-def inicializar_datos_usuario(usuario):
-    datos = {
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "puntos": 0,
-        "errores_totales_juego": 0,
-        "tiempo_total_juego": 0,
-        "partidas_jugadas": 0,
-        "victorias": 0,
-        "derrotas": 0
-    }
-
-    for clave in datos:
-        usuario[clave] = datos[clave]
-
-    return usuario
-
-
-def crear_comodines_iniciales(valor=True):
-    return {
-        "revelar_palabra": valor,
-        "eliminar_restricciones": valor,
-        "pista_extra": valor
-    }
-
-##########################
-# FUNCIONES DE PALABRAS
-##########################
-
-def seleccionar_palabra_y_lista():
-    palabra = random.choice(list(PALABRAS.keys()))
-    lista = PALABRAS[palabra]
-    return palabra, lista
-
-
-def desordenar_letras(palabra, dificultad=2):
-    lista_letras = []
-    for letra in palabra:
-        lista_letras = agregar_elemento(lista_letras, letra)
-
-    for _ in range(dificultad):
-        for i in range(len(lista_letras)):
-            r = random.randint(0, len(lista_letras) - 1)
-            lista_letras[i], lista_letras[r] = lista_letras[r], lista_letras[i]
-
-    return "".join(lista_letras)
-
-##########################
-# FUNCIONES DE PUNTAJE
-##########################
-
-def calcular_puntos_por_palabra(palabra, tiempo_respuesta):
-    puntos = len(palabra)
-    if len(palabra) > 4:
-        puntos += 2
-    if tiempo_respuesta < 5:
-        puntos += 3
-    elif tiempo_respuesta < 10:
-        puntos += 1
-    return puntos
-
-def sumar_puntos_por_acierto(usuario, puntos):
-    usuario["palabras_acertadas"] += 1
-    usuario["puntos"] += puntos
-
-def sumar_error(usuario):
-    usuario["palabras_erradas"] += 1
-
-##########################
-# FUNCIONES DE PARTIDA
-##########################
 
 def jugar_una_partida(palabra_base, lista_palabras, vidas, puntaje, comodines_jugador, usuario, ruta, clave_usuario):
+    """
+    Ejecuta una ronda completa donde el jugador intenta adivinar palabras
+    hasta quedarse sin vidas. Maneja puntaje, errores, comodines y progreso.
+
+    Parámetros:
+    - palabra_base (str): Palabra base de donde salen todas las palabras válidas.
+    - lista_palabras (list): Lista con todas las palabras correctas del nivel.
+    - vidas (int): Cantidad de vidas disponibles al iniciar la partida.
+    - puntaje (int): Puntaje acumulado hasta antes de la partida.
+    - comodines_jugador (dict): Comodines disponibles en este nivel.
+    - usuario (dict): Diccionario con todas las estadísticas del usuario.
+    - ruta (str): Ruta al archivo JSON donde guardar los cambios.
+    - clave_usuario (str): Clave de identificación dentro del archivo JSON.
+
+    Retorno:
+    - tuple: (puntaje_actualizado (int), vidas_restantes (int))
+    """
+
     palabras_usadas = []
-    mostrar_letras(desordenar_letras(palabra_base))
+
+    # Mostramos las letras en orden real (solo la palabra base)
+    mostrar_letras(list(palabra_base))
 
     puntaje_actual = puntaje
     vidas_actuales = vidas
@@ -98,21 +44,37 @@ def jugar_una_partida(palabra_base, lista_palabras, vidas, puntaje, comodines_ju
     inicio = time.time()
 
     while vidas_actuales > 0:
-        vidas_actuales = comodines.manejar_comodines(comodines_jugador, palabra_base, lista_palabras, vidas_actuales)
+        vidas_actuales = comodines.manejar_comodines(
+            comodines_jugador,
+            palabra_base,
+            lista_palabras,
+            vidas_actuales
+        )
 
         intento = input("📝 Ingresá una palabra: ")
         usuario["partidas_jugadas"] += 1
         tiempo_respuesta = time.time() - inicio
 
         if validar_palabra(intento, lista_palabras, palabras_usadas):
-            palabras_usadas = agregar_elemento(palabras_usadas, convertir_a_minusculas(intento))
+            palabras_usadas = agregar_elemento(
+                palabras_usadas,
+                convertir_a_minusculas(intento)
+            )
+
             puntos = calcular_puntos_por_palabra(intento, tiempo_respuesta)
             if racha >= 2:
                 puntos += 2
+
             puntaje_actual += puntos
             sumar_puntos_por_acierto(usuario, puntos)
             racha += 1
-            print(f"✅ Correcto! Ganaste {puntos} puntos. Palabras encontradas: {len(palabras_usadas)}/{len(lista_palabras)}")
+
+            encontradas = len(palabras_usadas)
+            totales = len(lista_palabras)
+
+            print(f"✅ Correcto! Ganaste {puntos} puntos.")
+            print(f"📘 Progreso: {encontradas}/{totales} palabras.")
+
         else:
             vidas_actuales -= 1
             errores += 1
@@ -126,67 +88,139 @@ def jugar_una_partida(palabra_base, lista_palabras, vidas, puntaje, comodines_ju
     usuario["errores_totales_juego"] += errores
     usuario["tiempo_total_juego"] += time.time() - inicio
 
-    # GUARDO solo si clave_usuario es válida
-    if clave_usuario is not None:
+    if clave_usuario != None:
         usuarios = cargar_usuarios(ruta)
         usuarios[clave_usuario] = usuario
         guardar_usuarios(usuarios, ruta)
 
     return puntaje_actual, vidas_actuales
 
+
 ##########################
 # FUNCIONES DE NIVEL
 ##########################
-
 def jugar_un_nivel(nivel, vidas, puntaje, reinicios, comodines_jugador, usuario, ruta, clave_usuario):
+    """
+    Ejecuta toda la lógica de un nivel completo: selecciona palabra base,
+    controla vidas, progreso, reinicios y determina si el nivel se supera.
+
+    Parámetros:
+    - nivel (int): Número de nivel actual.
+    - vidas (int): Vidas iniciales para jugar este nivel.
+    - puntaje (int): Puntaje acumulado antes de este nivel.
+    - reinicios (int): Cantidad de reinicios permitidos para repetir niveles.
+    - comodines_jugador (dict): Comodines iniciales para este nivel.
+    - usuario (dict): Datos completos del usuario.
+    - ruta (str): Ruta al archivo JSON donde guardar las estadísticas.
+    - clave_usuario (str): Identificador del usuario.
+
+    Retorno:
+    - tuple: (puntaje_actualizado (int), reinicios_restantes (int), nivel_superado (bool))
+    """
+
     mostrar_encabezado_de_nivel(nivel)
-    palabra_base, lista_palabras = seleccionar_palabra_y_lista()
+    palabra_base, lista_palabras = seleccionar_palabra_y_lista(PALABRAS)
+
+    comodines_jugador = comodines.crear_comodines_iniciales(True)
     puntaje_actual = puntaje
     vidas_actuales = vidas
     nivel_superado = False
 
-    palabras_restantes = 10
+    total_palabras = len(lista_palabras)
+    palabras_restantes = total_palabras
+
     while palabras_restantes > 0 and vidas_actuales > 0:
-        print(f"\n🏆 Palabra {10 - palabras_restantes + 1} de 10")
+        palabra_actual_num = total_palabras - palabras_restantes + 1
+        print(f"\n🏆En esta palabra hay {total_palabras} palabras disponibles")
+
         puntaje_actual, vidas_actuales = jugar_una_partida(
-            palabra_base, lista_palabras, vidas_actuales, puntaje_actual,
-            comodines_jugador, usuario, ruta, clave_usuario
+            palabra_base,
+            lista_palabras,
+            vidas_actuales,
+            puntaje_actual,
+            comodines_jugador,
+            usuario,
+            ruta,
+            clave_usuario
         )
+
         palabras_restantes -= 1
 
-    if vidas_actuales > 0:
-        print(f"\n🎉 Nivel {nivel} superado! Puntaje acumulado: {puntaje_actual}")
+    if palabras_restantes == 0 and vidas_actuales > 0:
         nivel_superado = True
     else:
-        print("\n💀 Ya no te quedan vidas.")
         reinicios -= 1
+        print(f"\n💥 Nivel no completado. Reinicios restantes: {reinicios}")
 
     return puntaje_actual, reinicios, nivel_superado
+
 
 ##########################
 # FUNCIÓN PRINCIPAL
 ##########################
-
 def ejecutar_juego_completo(usuario, ruta, vidas, reinicios, nivel, puntaje, comodines_jugador, clave_usuario):
+    """
+    Controla la ejecución de todos los niveles del juego.
+    Maneja reinicios, avance de niveles, acumulación de puntaje y finalización.
+
+    Parámetros:
+    - usuario (dict): Diccionario con todos los datos del jugador.
+    - ruta (str): Ruta del archivo JSON.
+    - vidas (int): Vidas iniciales para cada nivel.
+    - reinicios (int): Cantidad de reinicios disponibles.
+    - nivel (int): Nivel inicial.
+    - puntaje (int): Puntaje inicial acumulado.
+    - comodines_jugador (dict): Comodines iniciales.
+    - clave_usuario (str): Identificador del usuario.
+
+    Retorno:
+    - tuple: (nivel_final (int), puntaje_final (int))
+    """
+
     nivel_actual = nivel
     puntaje_actual = puntaje
     reinicios_actual = reinicios
 
-    while nivel_actual <= 5 and reinicios_actual >= 0:
+    while nivel_actual <= 5 and reinicios_actual > 0:
         puntaje_actual, reinicios_actual, superado = jugar_un_nivel(
-            nivel_actual, vidas, puntaje_actual, reinicios_actual,
-            comodines_jugador, usuario, ruta, clave_usuario
+            nivel_actual,
+            vidas,
+            puntaje_actual,
+            reinicios_actual,
+            comodines_jugador,
+            usuario,
+            ruta,
+            clave_usuario
         )
 
         if superado:
             nivel_actual += 1
+        elif reinicios_actual > 0:
+            print(f"♻️ Reiniciando el nivel {nivel_actual}...")
+            vidas = 3
         else:
             break
 
     return nivel_actual, puntaje_actual
 
+
+
 def iniciar_juego(usuario, ruta, vidas=3, clave_usuario=None):
-    if usuario is None or clave_usuario is None:
+    """
+    Configura y comienza una partida completa.
+    Inicializa estadísticas, reinicios, puntaje e inicia la secuencia de niveles.
+
+    Parámetros:
+    - usuario (dict): Datos del usuario que inició sesión.
+    - ruta (str): Ruta del archivo JSON.
+    - vidas (int): Vidas iniciales por nivel (default = 3).
+    - clave_usuario (str|None): Identificador del usuario dentro del JSON.
+
+    Retorno:
+    - None: Solo ejecuta el flujo del juego.
+    """
+
+    if usuario == None or clave_usuario == None:
         print("❌ No se puede iniciar el juego sin iniciar sesión correctamente.")
         return
 
@@ -194,17 +228,24 @@ def iniciar_juego(usuario, ruta, vidas=3, clave_usuario=None):
     mostrar_encabezado_de_juego()
 
     inicializar_datos_usuario(usuario)
-    reinicios, nivel, puntaje = 2, 1, 0
-    comodines_jugador = crear_comodines_iniciales(True)
+    reinicios, nivel, puntaje = 3, 1, 0
+
+    comodines_jugador = comodines.crear_comodines_iniciales(True)
 
     nivel_final, puntaje_final = ejecutar_juego_completo(
-        usuario, ruta, vidas, reinicios, nivel, puntaje, comodines_jugador, clave_usuario
+        usuario,
+        ruta,
+        vidas,
+        reinicios,
+        nivel,
+        puntaje,
+        comodines_jugador,
+        clave_usuario
     )
 
     usuario["tiempo_total_juego"] += time.time() - inicio
 
-    # GUARDO solo si clave_usuario es válida
-    if clave_usuario is not None:
+    if clave_usuario != None:
         usuarios = cargar_usuarios(ruta)
         usuarios[clave_usuario] = usuario
         guardar_usuarios(usuarios, ruta)
