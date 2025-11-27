@@ -179,7 +179,7 @@ def seleccionar_palabra_y_lista(diccionario: dict) -> tuple:
         claves += [clave]
 
     longitud = 0
-    for _ in claves:
+    for i in claves:
         longitud += 1
 
     indice_aleatorio = random.randint(0, longitud - 1)

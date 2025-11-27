@@ -115,7 +115,7 @@ def validar_palabra(palabra: str, lista: list, usadas: list) -> bool:
     Retorna:
         bool: True si la palabra es válida y no ha sido usada, False si no.
     """
-    # Simular strip usando crear_mi_separador
+   
     partes = crear_mi_separador(palabra, " ")
     palabra_limpia = ""
     i = 0

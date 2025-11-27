@@ -78,7 +78,7 @@ def registrar_usuario(usuarios: dict, ruta: str) -> dict:
     return usuarios  
 
 
-def iniciar_sesion(usuarios: dict) -> tuple[dict | None, str | None]:
+def iniciar_sesion(usuarios: dict) -> tuple:
     """
     Permite iniciar sesión verificando existencia del usuario y su contraseña.
 

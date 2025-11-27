@@ -1,4 +1,4 @@
-from logica_juego import iniciar_juego
+from logica_juego import logica_principal
 from usuarios import cargar_usuarios
 from login import iniciar_sesion, registrar_usuario
 
@@ -34,9 +34,8 @@ def main() -> None:
                 usuario, nombre_usuario = iniciar_sesion(usuarios)
                 if usuario:
                     print(f"\n🎮 Bienvenido {nombre_usuario}! Iniciando juego...\n")
-                    iniciar_juego(usuario, RUTA, vidas=3, clave_usuario=nombre_usuario)
+                    logica_principal(usuario, RUTA, vidas=3, clave_usuario=nombre_usuario)
 
-            case "2":
                 usuarios = registrar_usuario(usuarios, RUTA)
 
             case "3":

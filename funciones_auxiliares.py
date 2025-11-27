@@ -69,17 +69,17 @@ def obtener_palabras_del_nivel(nivel: int) -> dict:
         - "validas" (list): Lista de palabras válidas que se pueden formar.
     """
     
-    # crear lista de claves sin usar keys()
+
     claves = []
     for clave in PALABRAS:
         claves = agregar_elemento(claves, clave)
 
-    # elegir índice aleatorio
+    # elijo índice aleatorio
     total = len(claves)
     indice = random.randint(0, total - 1)
     palabra_base = claves[indice]
 
-    # obtener palabras válidas
+    # obtengo palabras válidas
     palabras_validas = PALABRAS[palabra_base]
 
     # generar letras en orden real
