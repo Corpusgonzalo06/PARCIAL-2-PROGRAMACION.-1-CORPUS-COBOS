@@ -32,7 +32,7 @@ def main() -> None:
         match opcion:
             case "1":
                 usuario, nombre_usuario = iniciar_sesion(usuarios)
-                if usuario:
+                if usuario != None:
                     print(f"\n🎮 Bienvenido {nombre_usuario}! Iniciando juego...\n")
                     logica_principal(usuario, RUTA, vidas=3, clave_usuario=nombre_usuario)
 

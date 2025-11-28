@@ -1,6 +1,4 @@
 # estadisticas.py
-from usuarios import guardar_usuarios
-
 
 # ============================================================
 # INICIALIZAR ESTADISTICAS DE UN USUARIO

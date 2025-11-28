@@ -1,8 +1,13 @@
-
-
 def leer_archivo(ruta_archivo: str) -> list:
     """
-    Lee un archivo y devuelve todas sus líneas.
+    Lee un archivo de texto y devuelve todas sus líneas.
+
+    PARAMETROS:
+    - ruta_archivo (str): Ruta del archivo a leer.
+
+    RETORNA:
+    - list: Lista con todas las líneas del archivo.
+            Si el archivo no existe, retorna una lista vacía.
     """
     lineas = []
     try:
@@ -13,14 +18,17 @@ def leer_archivo(ruta_archivo: str) -> list:
     return lineas
 
 
-def separar_por_comas(linea: str) -> tuple:
+def separar_por_comas(linea: str) -> dict:
     """
-    Recibe una línea y la separa en columnas sin usar split().
-    Devuelve una lista de columnas y la cantidad de columnas.
+    Separa una línea de texto usando comas como limitador.
+
+    La función recorre caracter por caracter y arma una lista con las columnas
+    encontradas y la cantidad total de columnas procesadas.
     """
-    columnas = []             # lista de palabras/columnas
-    texto_actual = ""         # acumula caracteres hasta la coma
-    cantidad_columnas = 0     # contador de columnas agregadas
+
+    columnas = []
+    texto_actual = ""
+    cantidad_columnas = 0
 
     for caracter in linea:
         if caracter == "," or caracter == "\n":
@@ -32,17 +40,30 @@ def separar_por_comas(linea: str) -> tuple:
         else:
             texto_actual += caracter
 
-    return columnas, cantidad_columnas
+    resultado = {
+        "columnas": columnas,
+        "cantidad": cantidad_columnas
+    }
 
+    return resultado
 
 def cargar_fila_en_diccionario(diccionario_categorias: dict, columnas: list, cantidad_columnas: int) -> dict:
     """
-    Agrega las palabras de una fila al diccionario.
-    columnas[0] = categoría
-    columnas[1..n] = palabras
+    Carga una fila procesada dentro del diccionario de categorías.
+
+    La primera columna representa la categoría, y las restantes son palabras
+    asociadas a esa categoría.
+
+    PARAMETROS:
+    - diccionario_categorias (dict): Diccionario donde se guardarán los datos.
+    - columnas (list): Lista con la categoría y las palabras leídas.
+    - cantidad_columnas (int): Cantidad total de columnas extraídas.
+
+    RETORNA:
+    - dict: Diccionario actualizado con la categoría y sus palabras.
     """
     if cantidad_columnas < 2:
-        return diccionario_categorias  # fila inválida
+        retorno = diccionario_categorias  # fila inválida
 
     categoria = columnas[0]
 
@@ -63,14 +84,23 @@ def cargar_fila_en_diccionario(diccionario_categorias: dict, columnas: list, can
             diccionario_categorias[categoria] += [palabra]
         indice += 1
 
+    retorno =  diccionario_categorias
     return diccionario_categorias
-
 
 
 def cargar_palabras_por_categoria(ruta_archivo: str = "partidas.csv") -> dict:
     """
-    Carga palabras desde un archivo CSV (categoría, palabra1, palabra2, ...).
-    Retorna un diccionario: {categoria: [palabra1, palabra2, ...]}
+    Carga un archivo CSV y construye un diccionario donde cada categoría
+    está asociada a una lista de palabras.
+
+    El archivo debe tener el formato:
+        categoria, palabra1, palabra2, ...
+
+    PARAMETROS:
+    - ruta_archivo : Ruta del archivo CSV. Por defecto "partidas.csv".
+
+    RETORNA:
+    - dict: Diccionario con la estructura.
     """
     diccionario_categorias = {}
     lineas = leer_archivo(ruta_archivo)
@@ -84,8 +114,15 @@ def cargar_palabras_por_categoria(ruta_archivo: str = "partidas.csv") -> dict:
         if es_primera_linea:
             es_primera_linea = False
         else:
-            columnas, cantidad_columnas = separar_por_comas(linea_actual)
-            diccionario_categorias = cargar_fila_en_diccionario(diccionario_categorias, columnas, cantidad_columnas)
+            resultado = separar_por_comas(linea_actual)
+            columnas = resultado["columnas"]
+            cantidad_columnas = resultado["cantidad"]
+
+            diccionario_categorias = cargar_fila_en_diccionario(
+                diccionario_categorias,
+                columnas,
+                cantidad_columnas
+            )
 
         indice_linea += 1
 

@@ -1,6 +1,6 @@
 # funciones_auxiliares.py
 from palabras import PALABRAS
-from mis_funciones import agregar_elemento, copiar_lista
+from mis_funciones import agregar_elemento
 import random 
 
 
