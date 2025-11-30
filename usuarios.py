@@ -43,17 +43,17 @@ def guardar_usuarios(usuario_actual: dict, ruta: str) -> None:
         None
     """
     try:
-        # 1️⃣ Cargar todos los usuarios existentes
+
         try:
             with open(ruta, "r", encoding="utf-8") as archivo:
                 todos_usuarios = json.load(archivo)
         except (FileNotFoundError, json.JSONDecodeError):
             todos_usuarios = {}
 
-        # 2️⃣ Actualizar solo el usuario que viene
+
         todos_usuarios.update(usuario_actual)
 
-        # 3️⃣ Guardar todo de nuevo
+
         with open(ruta, "w", encoding="utf-8") as archivo:
             json.dump(todos_usuarios, archivo, indent=4, ensure_ascii=False)
 
@@ -86,3 +86,38 @@ def inicializar_datos_usuario(usuario: dict) -> dict:
         usuario[clave] = datos[clave]
 
     return usuario
+
+def guardar_datos_usuario(usuario: dict, clave_usuario: str | None, ruta: str) -> None:
+    """
+    Guarda los datos del usuario en el archivo JSON si la clave existe.
+
+    Parámetros:
+        usuario (dict): Diccionario con los datos del usuario.
+        clave_usuario (str | None): Clave del usuario a actualizar.
+        ruta (str): Ruta del archivo JSON donde se guardan los usuarios.
+
+    Retorna:
+        None
+    """
+    if not (clave_usuario == None):
+        usuarios = cargar_usuarios(ruta)
+        usuarios[clave_usuario] = usuario
+        guardar_usuarios(usuarios, ruta)
+
+
+def validar_sesion(usuario: dict | None, clave_usuario: str | None) -> bool:
+    """
+    Valida que la sesión pueda iniciarse, verificando que exista usuario y clave.
+
+    Parámetros:
+        usuario (dict | None): Diccionario con los datos del usuario.
+        clave_usuario (str | None): Clave del usuario.
+
+    Retorna:
+        bool: True si la sesión es válida, False si no.
+    """
+    sesion_valida = True
+    if usuario == None or clave_usuario == None:
+        print("❌ No se puede iniciar el juego sin iniciar sesión.")
+        return False
+

@@ -25,8 +25,6 @@ def convertir_a_minusculas(palabra: str) -> str:
     return resultado
 
 
-
-
 def crear_mi_separador(texto: str, separador: str) -> list:
     """
     Separa un texto en palabras usando un carácter separador.
@@ -52,10 +50,6 @@ def crear_mi_separador(texto: str, separador: str) -> list:
     return resultado
 
 
-
-
-
-
 def agregar_elemento(lista: list, elemento) -> list:
     """
     Devuelve una nueva lista con el elemento agregado al final
@@ -76,8 +70,6 @@ def agregar_elemento(lista: list, elemento) -> list:
     return nueva
 
 
-
-
 def convertir_a_entero(texto: str) -> int:
     """
     Convierte un texto numérico a entero.
@@ -95,11 +87,6 @@ def convertir_a_entero(texto: str) -> int:
         i += 1                             
 
     return numero                        
-
-
-
-
-
 
 
 def convertir_a_entero(texto: str) -> int:
@@ -124,8 +111,6 @@ def convertir_a_entero(texto: str) -> int:
 
         i += 1                             
     return numero
-
-
 
 
 def seleccionar_palabra_y_lista(diccionario: dict) -> tuple:
@@ -184,12 +169,6 @@ def limpiar_texto(texto: str) -> str:
         indice += 1
 
     return limpio
-
-
-
-
-
-
 
 
 def desordenar_letras(palabra: str, dificultad: int = 2) -> str:

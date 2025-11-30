@@ -1,12 +1,6 @@
-# funciones_auxiliares.py
 from palabras import PALABRAS
 from mis_funciones import agregar_elemento
 import random 
-
-
-# ===========================
-# FUNCIONES DE PANTALLA
-# ===========================
 
 def mostrar_encabezado_de_juego() -> None:
     """
@@ -69,23 +63,18 @@ def obtener_palabras_del_nivel(nivel: int) -> dict:
         - "validas" (list): Lista de palabras válidas que se pueden formar.
     """
     
-
     claves = []
     for clave in PALABRAS:
         claves = agregar_elemento(claves, clave)
 
-    # elijo índice aleatorio
     total = len(claves)
     indice = random.randint(0, total - 1)
     palabra_base = claves[indice]
 
-    # obtengo palabras válidas
     palabras_validas = PALABRAS[palabra_base]
 
-    # generar letras en orden real
     letras = list(palabra_base)
 
-    # retornar en un diccionario
     resultado = {
         "palabra_base": palabra_base,
         "letras": letras,
@@ -93,3 +82,4 @@ def obtener_palabras_del_nivel(nivel: int) -> dict:
     }
 
     return resultado
+

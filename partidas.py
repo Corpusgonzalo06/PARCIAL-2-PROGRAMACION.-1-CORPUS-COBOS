@@ -20,32 +20,40 @@ def leer_archivo(ruta_archivo: str) -> list:
 
 def separar_por_comas(linea: str) -> dict:
     """
-    Separa una línea de texto usando comas como limitador.
+    Separa una línea de texto usando comas como delimitador.
 
     La función recorre caracter por caracter y arma una lista con las columnas
     encontradas y la cantidad total de columnas procesadas.
-    """
 
-    columnas = []
-    texto_actual = ""
-    cantidad_columnas = 0
+    Parámetros:
+        linea (str): Línea de texto a separar por comas.
+
+    Retorna:
+        dict: Diccionario con dos claves:
+            - "valores": Lista de columnas encontradas (str).
+            - "total_columnas": Cantidad de columnas procesadas (int).
+    """
+    lista_columnas = []
+    columna_actual = ""
+    total_columnas = 0
 
     for caracter in linea:
         if caracter == "," or caracter == "\n":
-            if len(columnas) == cantidad_columnas:
-                columnas += [""]
-            columnas[cantidad_columnas] = texto_actual
-            cantidad_columnas += 1
-            texto_actual = ""
+            if len(lista_columnas) == total_columnas:
+                lista_columnas += [""]
+            lista_columnas[total_columnas] = columna_actual
+            total_columnas += 1
+            columna_actual = ""
         else:
-            texto_actual += caracter
+            columna_actual += caracter
 
     resultado = {
-        "columnas": columnas,
-        "cantidad": cantidad_columnas
+        "valores": lista_columnas,
+        "total_columnas": total_columnas
     }
 
     return resultado
+
 
 def cargar_fila_en_diccionario(diccionario_categorias: dict, columnas: list, cantidad_columnas: int) -> dict:
     """

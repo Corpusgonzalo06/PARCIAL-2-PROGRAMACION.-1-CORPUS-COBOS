@@ -4,38 +4,31 @@ from mis_funciones import *
 # FUNCIONES DE COMODINES
 # ===========================
 
-
-def revelar_palabras(lista_palabras: list) -> None:
+def revelar_palabra_base(palabra_base: str) -> None:
     """
-    Esta función muestra por pantalla todas las palabras posibles.
+    Descripción:
+        Muestra por pantalla la palabra base del nivel sin modificar nada del juego.
 
     PARÁMETROS:
-        lista_palabras (list): Lista que contiene todas las palabras válidas del nivel.
+        palabra_base (str): La palabra principal que se usará en ese nivel.
 
     RETORNO:
-        None: No retorna nada, solo imprime en pantalla.
+        None: No retorna nada porque solo imprime la palabra base.
     """
-    texto = ""
-    i = 0
-    while i < len(lista_palabras):
-        texto = texto + lista_palabras[i]
-        if i < len(lista_palabras) - 1:
-            texto = texto + ", "
-        i += 1
-
-    print("💡 Las palabras posibles eran: " + texto)
+    print(f"💡 La palabra base es: {palabra_base}")
 
 
 def eliminar_restricciones(vidas: int) -> int:
     """
-    Esta función informa que no se descontará vida en el próximo intento.
-    Devuelve la misma cantidad de vidas sin modificarlas.
+    Descripción:
+        Elimina temporalmente las restricciones del turno, permitiendo un intento
+        sin perder vidas.
 
     PARÁMETROS:
-        vidas (int): Cantidad de vidas actuales del jugador.
+        vidas (int): Cantidad actual de vidas del jugador.
 
     RETORNO:
-        int: Las vidas sin modificar.
+        int: Devuelve la misma cantidad de vidas ya que no se descuenta ninguna.
     """
     print("🚀 Restricciones eliminadas. Tenés un intento libre sin perder vida.")
     vidas_actualizadas = vidas
@@ -44,13 +37,14 @@ def eliminar_restricciones(vidas: int) -> int:
 
 def dar_pista_extra(palabra_base: str) -> None:
     """
-    Esta función muestra como pista la primera letra de la palabra base.
+    Descripción:
+        Muestra una pista al jugador indicando la primera letra de una palabra válida.
 
     PARÁMETROS:
-        palabra_base (str): La palabra principal del nivel.
+        palabra_base (str): La palabra base desde donde se extrae la pista.
 
     RETORNO:
-        None: Solo imprime la pista.
+        None: Solo imprime una pista en pantalla.
     """
     letra = palabra_base[0]
     letra_minuscula = convertir_a_minusculas(letra)
@@ -59,28 +53,26 @@ def dar_pista_extra(palabra_base: str) -> None:
 
 def usar_comodin(opcion: int, palabra_base: str, lista_palabras: list, vidas: int) -> int:
     """
-    Esta función ejecuta el comodín correspondiente al número elegido.
+    Descripción:
+        Ejecuta el comodín seleccionado por el jugador en base a la opción elegida.
 
     PARÁMETROS:
-        opcion (int): Número identificador del comodín.
-        palabra_base (str): Palabra principal del nivel.
-        lista_palabras (list): Lista de palabras válidas.
-        vidas (int): Cantidad de vidas del jugador antes de usar el comodín.
+        opcion (int): Número del comodín elegido.
+        palabra_base (str): Palabra base del nivel.
+        lista_palabras (list): Lista de palabras válidas del nivel (no siempre usada).
+        vidas (int): Vidas actuales del jugador.
 
     RETORNO:
-        int: Cantidad de vidas luego de aplicar el comodín.
+        int: Devuelve las vidas actualizadas después de aplicar el comodín.
     """
     vidas_actualizadas = vidas
 
     if opcion == 1:
-        revelar_palabras(lista_palabras)
-
+        revelar_palabra_base(palabra_base)
     elif opcion == 2:
         vidas_actualizadas = eliminar_restricciones(vidas)
-
     elif opcion == 3:
         dar_pista_extra(palabra_base)
-
     else:
         print("⚠️ Comodín desconocido")
 
@@ -89,146 +81,136 @@ def usar_comodin(opcion: int, palabra_base: str, lista_palabras: list, vidas: in
 
 def validar_uso_comodin(texto_inicial: str) -> bool:
     """
-    Esta función valida si el usuario desea usar un comodín,
-    aceptando únicamente las respuestas "si" o "no".
+    Descripción:
+        Valida si el jugador quiere o no usar un comodín, aceptando solo 'si' o 'no'.
 
     PARÁMETROS:
-        texto_inicial (str): Texto ingresado inicialmente por el usuario.
+        texto_inicial (str): La primera respuesta ingresada por el jugador.
 
     RETORNO:
-        bool: True si desea usar un comodín, False si no.
+        bool: Devuelve True si quiere usar un comodín, False si no.
     """
     usar_bandera = False
     respuesta_valida = False
     texto = convertir_a_minusculas(texto_inicial)
 
     while respuesta_valida == False:
-
         if texto == "si":
             usar_bandera = True
             respuesta_valida = True
-
         elif texto == "no":
             usar_bandera = False
             respuesta_valida = True
-
         else:
             print("Por favor, ingresá 'si' o 'no'.")
             texto = convertir_a_minusculas(input("¿Querés usar un comodín? (si/no): "))
-
-    return usar_bandera 
+    return usar_bandera
 
 
 def obtener_comodines_disponibles(comodines_jugador: dict) -> list:
     """
-    Esta función obtiene los nombres de los comodines que aún están disponibles.
+    Descripción:
+        Revisa el diccionario de comodines del jugador y devuelve solo los que aún están disponibles.
 
     PARÁMETROS:
-        comodines_jugador (dict): Diccionario donde cada clave es un comodín
-                                  y el valor es True (disponible) o False (usado).
+        comodines_jugador (dict): Diccionario donde cada comodín está marcado como True (disponible) o False.
 
     RETORNO:
-        list: Lista con los nombres de los comodines que están disponibles.
+        list: Lista con los nombres de los comodines disponibles.
     """
     disponibles = []
-
     for nombre in comodines_jugador:
         if comodines_jugador[nombre] == True:
             disponibles = agregar_elemento(disponibles, nombre)
-
     return disponibles
 
 
 def mostrar_comodines(disponibles: list) -> None:
     """
-    Esta función muestra en pantalla los comodines disponibles,
-    numerados en orden.
+    Descripción:
+        Muestra por pantalla los comodines que el jugador tiene disponibles.
 
     PARÁMETROS:
-        disponibles (list): Lista con los nombres de los comodines disponibles.
+        disponibles (list): Lista de nombres de comodines habilitados.
 
     RETORNO:
-        None: Solo imprime la lista.
+        None: Solo imprime los comodines.
     """
     print("\n🎁 Comodines disponibles:")
     i = 0
     numero = 1
     while i < len(disponibles):
         print(f"{numero}. {disponibles[i]}")
-
         numero += 1
         i += 1
 
 
 def es_numero_valido(texto: str) -> bool:
     """
-    Esta función determina si un texto contiene únicamente dígitos.
+    Descripción:
+        Verifica si el texto ingresado es un número entero positivo válido.
 
     PARÁMETROS:
-        texto (str): Texto ingresado para validar.
+        texto (str): Texto ingresado por el usuario.
 
     RETORNO:
-        bool: True si todos los caracteres son dígitos, False en caso contrario.
+        bool: True si el texto representa un número, False si no.
     """
     valido = True
-
     if len(texto) == 0:
         valido = False
-
     i = 0
     while valido == True and i < len(texto):
         if texto[i] < '0' or texto[i] > '9':
             valido = False
         i += 1
-
     return valido
 
 
 def leer_opcion_numerica(texto: str) -> int:
     """
-    Esta función convierte un texto numérico a entero.
-    Si el texto no es válido, devuelve None.
+    Descripción:
+        Convierte un texto a número entero si es válido.
 
     PARÁMETROS:
-        texto (str): Texto que representa un número entero.
+        texto (str): Texto ingresado que debería representar un número.
 
     RETORNO:
-        int | None: El número entero convertido, o None si no era válido.
+        int: Número convertido, o None si el texto no es válido.
     """
     resultado = None
     es_val = es_numero_valido(texto)
-
     if es_val == True:
         resultado = convertir_a_entero(texto)
-
     return resultado
 
 
 def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras: list, vidas_actuales: int) -> int:
     """
-    Esta función controla toda la lógica del uso de comodines:
-    pregunta al jugador, muestra los disponibles y ejecuta el elegido.
+    Descripción:
+        Controla todo el proceso de uso de comodines:
+        - pregunta si el jugador quiere usar uno,
+        - muestra los disponibles,
+        - valida la opción,
+        - aplica el comodín elegido.
 
     PARÁMETROS:
-        comodines_jugador (dict): Diccionario con el estado de cada comodín.
-        palabra_base (str): Palabra principal del nivel.
-        lista_palabras (list): Lista de todas las palabras válidas.
+        comodines_jugador (dict): Diccionario con el estado de los comodines.
+        palabra_base (str): Palabra base del nivel.
+        lista_palabras (list): Lista de palabras válidas del nivel.
         vidas_actuales (int): Cantidad actual de vidas del jugador.
 
     RETORNO:
-        int: Vidas actualizadas luego del uso del comodín (si se usó).
+        int: Devuelve las vidas actualizadas según el comodín aplicado.
     """
-
     resultado = vidas_actuales
 
     usar = validar_uso_comodin(input("¿Querés usar un comodín? (si/no): "))
 
     if usar == True:
-
         disponibles = obtener_comodines_disponibles(comodines_jugador)
 
         if len(disponibles) > 0:
-
             mostrar_comodines(disponibles)
 
             opcion_txt = input("Elegí un comodín: ")
@@ -248,7 +230,7 @@ def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras
                 nombre = disponibles[opcion - 1]
                 comodines_jugador[nombre] = False
 
-                if nombre == "revelar_palabras":
+                if nombre == "revelar_palabra_base":
                     opcion_comodin = 1
                 elif nombre == "eliminar_restricciones":
                     opcion_comodin = 2
@@ -258,7 +240,6 @@ def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras
                     opcion_comodin = 0
 
                 resultado = usar_comodin(opcion_comodin, palabra_base, lista_palabras, resultado)
-
         else:
             print("⚠️ No te quedan comodines disponibles.")
 
@@ -267,22 +248,23 @@ def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras
 
 def crear_comodines_iniciales(valor=True):
     """
-    Esta función crea el diccionario que contiene los comodines iniciales.
+    Descripción:
+        Crea un diccionario con los comodines iniciales del jugador,
+        todos activados por defecto.
 
     PARÁMETROS:
-        valor (bool): Valor inicial de cada comodín (True = disponible).
+        valor (bool): Estado inicial para todos los comodines (por defecto, True).
 
     RETORNO:
-        dict: Diccionario con los nombres de los comodines y su disponibilidad.
+        dict: Diccionario con los comodines habilitados o no según el valor recibido.
     """
     revelar_palabras = valor
     eliminar_restricciones = valor
     pista_extra = valor
 
     comodines = {
-        "revelar_palabras": revelar_palabras,
+        "revelar_palabra_base": revelar_palabras,
         "eliminar_restricciones": eliminar_restricciones,
         "pista_extra": pista_extra
     }
-
     return comodines

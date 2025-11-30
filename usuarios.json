@@ -1,86 +1,14 @@
 {
-    "messi": {
-        "contraseña": "messi",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 0,
-        "errores_totales_juego": 0
-    },
-    "maria": {
-        "contraseña": "virgen",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 0,
-        "errores_totales_juego": 0
-    },
-    "tito": {
-        "contraseña": "tito",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 0,
-        "errores_totales_juego": 0
-    },
-    "gonza": {
-        "contraseña": "gonza",
-        "partidas_jugadas": 0,
-        "palabras_acertadas": 0,
-        "palabras_erradas": 0,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 0,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 0,
-        "errores_totales_juego": 0
-    },
-    "ronaldo": {
-        "contraseña": "ronaldo",
-        "partidas_jugadas": 5,
-        "palabras_acertadas": 2,
-        "palabras_erradas": 3,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 6,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 127.50120162963867,
-        "errores_totales_juego": 3
-    },
     "gonzalo": {
-        "contraseña": "gonzalo",
-        "partidas_jugadas": 10,
-        "palabras_acertadas": 1,
+        "contraseña": "gonza",
+        "partidas_jugadas": 9,
+        "palabras_acertadas": 0,
         "palabras_erradas": 9,
         "victorias": 0,
         "derrotas": 1,
-        "puntos": 12,
+        "puntos": 0,
         "tiempo_total": 0,
         "tiempo_total_juego": 0,
         "errores_totales_juego": 0
-    },
-    "titanes": {
-        "contraseña": "titanes",
-        "partidas_jugadas": 11,
-        "palabras_acertadas": 2,
-        "palabras_erradas": 9,
-        "victorias": 0,
-        "derrotas": 0,
-        "puntos": 16,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 63.28153944015503,
-        "errores_totales_juego": 9
     }
 }

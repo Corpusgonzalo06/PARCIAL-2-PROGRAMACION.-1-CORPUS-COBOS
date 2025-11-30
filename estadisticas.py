@@ -1,8 +1,3 @@
-# estadisticas.py
-
-# ============================================================
-# INICIALIZAR ESTADISTICAS DE UN USUARIO
-# ============================================================
 def inicializar_estadisticas(usuario_data: dict) -> None:
     """
     Inicializa las estadísticas de un usuario si no existen.
