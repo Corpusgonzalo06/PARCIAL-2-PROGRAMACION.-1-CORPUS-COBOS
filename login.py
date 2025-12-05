@@ -49,7 +49,8 @@ def obtener_usuario(usuarios: dict, nombre: str) -> dict | None:
 
 def registrar_usuario(usuarios: dict, ruta: str) -> dict:
     """
-    Registra un nuevo usuario en el diccionario si no existe ya.
+    Registra un nuevo usuario en el diccionario si no existe ya
+    y guarda automáticamente los cambios en el archivo JSON.
 
     Parámetros:
         usuarios (dict): Diccionario con los usuarios actuales.
@@ -60,22 +61,24 @@ def registrar_usuario(usuarios: dict, ruta: str) -> dict:
         dict: Diccionario actualizado con el nuevo usuario agregado.
     """
     nombre = limpiar_texto(input("Ingrese su nombre de usuario: "))  
-    existe = buscar_usuario(usuarios, nombre) 
-    registro_exitoso = False  
+    existe = buscar_usuario(usuarios, nombre)  
 
-    if not existe:
+    if (not existe):
         contraseña = limpiar_texto(input("Ingrese su contraseña: "))  
         nuevo_usuario = {"contraseña": contraseña}  
         inicializar_estadisticas(nuevo_usuario)     
 
         usuarios[nombre] = nuevo_usuario            
 
+
+        guardar_usuarios(usuarios, ruta)
+
         print(f"✅ Usuario {nombre} registrado correctamente.")
-        registro_exitoso = True
     else:
         print("⚠️ El usuario ya existe.")
 
-    return usuarios  
+    return usuarios
+
 
 
 def iniciar_sesion(usuarios: dict) -> tuple:
@@ -98,7 +101,7 @@ def iniciar_sesion(usuarios: dict) -> tuple:
 
     no_existe = buscar_usuario(usuarios, nombre)  
 
-    if not no_existe or nombre == "":
+    if (not no_existe) or (nombre == ""):
         print("❌ Usuario no encontrado.")
 
     else:

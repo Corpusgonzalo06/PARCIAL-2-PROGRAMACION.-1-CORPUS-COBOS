@@ -6,8 +6,9 @@ from usuarios import cargar_usuarios, guardar_usuarios, inicializar_datos_usuari
 from palabras import PALABRAS
 from funciones_auxiliares import mostrar_letras, mostrar_encabezado_de_juego, mostrar_encabezado_de_nivel
 from validaciones import validar_palabra
-from manejo_puntaje import calcular_puntos_por_palabra, sumar_puntos_por_acierto, sumar_error, aplicar_puntos, actualizar_racha, calcular_puntos_turno
+from manejo_puntaje import *
 from manejo_aleatoriedad import seleccionar_palabras_nivel, preparar_palabra
+from customizacion_nivel import mostrar_parcialmente_palabra
 
 def finalizar_nivel(estado_juego: dict, palabras_usadas: list, lista_palabras: list) -> None:
     """
@@ -145,7 +146,8 @@ def actualizar_palabras_usadas(palabras_usadas: list, intento: str) -> list:
     Retorno:
         list: Devuelve la lista actualizada con el nuevo intento agregado en minúsculas.
     """
-    return agregar_elemento(palabras_usadas, convertir_a_minusculas(intento))
+    lista_actualizada = agregar_elemento(palabras_usadas, convertir_a_minusculas(intento))
+    return lista_actualizada 
 
 
 def mostrar_avance_del_turno(intento: str, palabras_usadas: list, lista_palabras: list, estado_juego: dict, puntos: int) -> None:
@@ -167,8 +169,9 @@ def mostrar_avance_del_turno(intento: str, palabras_usadas: list, lista_palabras
     """
     cantidad_acertadas = len(palabras_usadas)
     cantidad_totales = len(lista_palabras)
-
+    print("--------------------------------------------------")
     print(f"✅ ¡Correcto! +{puntos} puntos | "f"Progreso: {cantidad_acertadas}/{cantidad_totales} | "f"Vidas: {estado_juego['vidas']}")
+    print("---------------------------------------------------")
 
 def procesar_acierto(intento: str, palabras_usadas: list, lista_palabras: list, estado_juego: dict, usuario: dict, racha: int, momento_del_intento: float) -> dict:
     """
@@ -283,10 +286,10 @@ def ejecutar_ronda(palabra_base: str, lista_palabras: list, estado_juego: dict, 
     palabras_usadas = []
     racha = 0
 
+    mostrar_parcialmente_palabra(palabra_base, lista_palabras)
     while estado_juego["vidas"] > 0 and len(palabras_usadas) < len(lista_palabras):
 
         aplicar_comodines(estado_juego, palabra_base, lista_palabras)
-
         jugada = obtener_intento_jugador(usuario)
         intento = jugada["intento"]
         momento_del_intento = jugada["momento_del_intento"]
@@ -302,11 +305,9 @@ def ejecutar_ronda(palabra_base: str, lista_palabras: list, estado_juego: dict, 
     return palabras_usadas
 
 
-
-
-def obtener_todas_las_palabras() -> list:
+def copiar_lista(palabras_fuente: list) -> list:
     todas_las_palabras = []
-    for palabra in PALABRAS:
+    for palabra in palabras_fuente:
         todas_las_palabras = agregar_elemento(todas_las_palabras, palabra)
     return todas_las_palabras
 
@@ -331,7 +332,8 @@ def ejecutar_palabras_nivel(palabras_nivel: list, estado_juego: dict, usuario: d
         if estado_juego["vidas"] <= 0:
             break
 
-        lista_palabras = preparar_palabra(palabra_base)
+        lista_palabras = preparar_palabra(palabra_base, PALABRAS)
+
         palabras_usadas = ejecutar_ronda(palabra_base, lista_palabras, estado_juego, usuario)
         finalizar_nivel(estado_juego, palabras_usadas, lista_palabras)
 
@@ -339,7 +341,7 @@ def ejecutar_palabras_nivel(palabras_nivel: list, estado_juego: dict, usuario: d
 def jugar_nivel(estado_juego: dict, usuario: dict) -> None:
     """
     Descripción:
-        Gestiona el flujo completo de un nivel. Muestra el encabezado del nivel actual,
+        Muestra el encabezado del nivel actual,
         obtiene todas las palabras disponibles, selecciona las correspondientes al nivel
         y ejecuta sus rondas.
 
@@ -353,7 +355,7 @@ def jugar_nivel(estado_juego: dict, usuario: dict) -> None:
     """
     mostrar_encabezado_de_nivel(estado_juego["nivel"])
 
-    todas_las_palabras = obtener_todas_las_palabras()
+    todas_las_palabras = copiar_lista(PALABRAS)
     palabras_nivel = seleccionar_palabras_nivel(todas_las_palabras)
 
     ejecutar_palabras_nivel(palabras_nivel, estado_juego, usuario)
@@ -377,14 +379,19 @@ def logica_principal(usuario: dict | None, ruta: str, vidas: int = 3, clave_usua
         completo del juego y guardar el progreso del usuario.
     """
     if validar_sesion(usuario, clave_usuario):
+        tiempo_inicio = time.time()
         estado_juego = inicializar_juego(usuario, vidas)
 
         while estado_juego["nivel"] <= 5 and estado_juego["reinicios"] > 0:
             jugar_nivel(estado_juego, usuario)
 
-        finalizar_juego(estado_juego, usuario)
+        tiempo_fin = time.time()
+        tiempo_partida = tiempo_fin - tiempo_inicio
+
+        usuario["tiempo_total_juego"] = tiempo_partida
+        usuario["tiempo_total"] += tiempo_partida
+
         guardar_datos_usuario(usuario, clave_usuario, ruta)
 
-    else:
-        resultado = None
-        return resultado
+
+

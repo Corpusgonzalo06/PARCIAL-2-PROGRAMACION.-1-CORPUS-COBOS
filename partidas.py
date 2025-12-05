@@ -1,18 +1,24 @@
+import random
+from mis_funciones import agregar_elemento
+from manejo_aleatoriedad import mezclar_palabras
+from validaciones import validar_fila
+
 def leer_archivo(ruta_archivo: str) -> list:
     """
-    Lee un archivo de texto y devuelve todas sus líneas.
+    Lee un archivo de texto línea por línea.
 
-    PARAMETROS:
-    - ruta_archivo (str): Ruta del archivo a leer.
+    Parámetros:
+        ruta_archivo (str): Ruta del archivo a leer.
 
-    RETORNA:
-    - list: Lista con todas las líneas del archivo.
-            Si el archivo no existe, retorna una lista vacía.
+    Retorna:
+        list: Lista con todas las líneas del archivo. Si el archivo no existe,
+              retorna una lista vacía y muestra un mensaje de advertencia.
     """
     lineas = []
     try:
-        with open(ruta_archivo, "r", encoding="utf-8") as archivo:
-            lineas = archivo.readlines()
+        archivo = open(ruta_archivo, "r", encoding="utf-8")
+        lineas = archivo.readlines()
+        archivo.close()
     except FileNotFoundError:
         print(f"⚠️ No se encontró el archivo: {ruta_archivo}")
     return lineas
@@ -20,18 +26,15 @@ def leer_archivo(ruta_archivo: str) -> list:
 
 def separar_por_comas(linea: str) -> dict:
     """
-    Separa una línea de texto usando comas como delimitador.
-
-    La función recorre caracter por caracter y arma una lista con las columnas
-    encontradas y la cantidad total de columnas procesadas.
+    Separa una línea de texto en columnas usando la coma como delimitador.
 
     Parámetros:
-        linea (str): Línea de texto a separar por comas.
+        linea (str): Línea del archivo CSV.
 
     Retorna:
-        dict: Diccionario con dos claves:
-            - "valores": Lista de columnas encontradas (str).
-            - "total_columnas": Cantidad de columnas procesadas (int).
+        dict: Contiene:
+            - "valores" (list): Lista con las columnas .
+            - "total_columnas" (int): Cantidad de columnas .
     """
     lista_columnas = []
     columna_actual = ""
@@ -39,8 +42,8 @@ def separar_por_comas(linea: str) -> dict:
 
     for caracter in linea:
         if caracter == "," or caracter == "\n":
-            if len(lista_columnas) == total_columnas:
-                lista_columnas += [""]
+            if total_columnas == len(lista_columnas):
+                lista_columnas = agregar_elemento(lista_columnas, "")
             lista_columnas[total_columnas] = columna_actual
             total_columnas += 1
             columna_actual = ""
@@ -55,83 +58,99 @@ def separar_por_comas(linea: str) -> dict:
     return resultado
 
 
-def cargar_fila_en_diccionario(diccionario_categorias: dict, columnas: list, cantidad_columnas: int) -> dict:
+
+def inicializar_categoria(diccionario_categorias: dict, nombre_categoria: str) -> None:
     """
-    Carga una fila procesada dentro del diccionario de categorías.
+    Crea la categoría en el diccionario si aún no existe.
 
-    La primera columna representa la categoría, y las restantes son palabras
-    asociadas a esa categoría.
+    Parámetros:
+        diccionario_categorias (dict): Diccionario general de categorías.
+        nombre_categoria (str): Clave de la categoría a inicializar.
 
-    PARAMETROS:
-    - diccionario_categorias (dict): Diccionario donde se guardarán los datos.
-    - columnas (list): Lista con la categoría y las palabras leídas.
-    - cantidad_columnas (int): Cantidad total de columnas extraídas.
-
-    RETORNA:
-    - dict: Diccionario actualizado con la categoría y sus palabras.
+    Retorna:
+        None
     """
-    if cantidad_columnas < 2:
-        retorno = diccionario_categorias  # fila inválida
-
-    categoria = columnas[0]
-
-    # Verificar si la categoría ya existe manualmente
     existe_categoria = False
-    for clave in diccionario_categorias:
-        if clave == categoria:
+    for categoria in diccionario_categorias:
+        if categoria == nombre_categoria:
             existe_categoria = True
             break
-
     if not existe_categoria:
-        diccionario_categorias[categoria] = []
+        diccionario_categorias[nombre_categoria] = []
 
-    indice = 1
-    while indice < cantidad_columnas:
-        palabra = columnas[indice]
-        if palabra != "":
-            diccionario_categorias[categoria] += [palabra]
-        indice += 1
-
-    retorno =  diccionario_categorias
-    return diccionario_categorias
-
-
-def cargar_palabras_por_categoria(ruta_archivo: str = "partidas.csv") -> dict:
+            
+def palabra_repetida(lista_palabras: list, palabra: str) -> bool:
     """
-    Carga un archivo CSV y construye un diccionario donde cada categoría
-    está asociada a una lista de palabras.
+    Verifica si una palabra ya fue cargada en una lista.
 
-    El archivo debe tener el formato:
-        categoria, palabra1, palabra2, ...
+    Parámetros:
+        lista_palabras (list): Lista de palabras ya existentes.
+        palabra (str): Palabra a verificar.
 
-    PARAMETROS:
-    - ruta_archivo : Ruta del archivo CSV. Por defecto "partidas.csv".
-
-    RETORNA:
-    - dict: Diccionario con la estructura.
+    Retorna:
+        bool: True si la palabra está repetida, False si no.
     """
-    diccionario_categorias = {}
-    lineas = leer_archivo(ruta_archivo)
+    repetida = False
+    for i in lista_palabras:
+        if i == palabra:
+            repetida = True
+            break
+    return repetida
 
-    es_primera_linea = True
-    indice_linea = 0
 
-    while indice_linea < len(lineas):
-        linea_actual = lineas[indice_linea]
 
-        if es_primera_linea:
-            es_primera_linea = False
-        else:
-            resultado = separar_por_comas(linea_actual)
-            columnas = resultado["columnas"]
-            cantidad_columnas = resultado["cantidad"]
+def agregar_palabra(diccionario_categorias: dict, nombre_categoria: str, palabra: str) -> None:
 
-            diccionario_categorias = cargar_fila_en_diccionario(
-                diccionario_categorias,
-                columnas,
-                cantidad_columnas
-            )
+    """
+    Agrega una palabra a una categoría evitando duplicados y valores vacíos.
 
-        indice_linea += 1
+    Parámetros:
+        diccionario_categorias (dict): Diccionario que contiene las categorías.
+        nombre_categoria (str): Categoría donde se agregará la palabra.
+        palabra (str): Palabra a agregar.
+
+    Retorna:
+        None
+    """
+    puede_agregarse = True
+
+    if palabra == "":
+        puede_agregarse = False
+
+    if not palabra_repetida(diccionario_categorias[nombre_categoria], palabra):
+        palabra_no_repetida = True
+    else:
+        palabra_no_repetida = False
+        puede_agregarse = False
+
+    if puede_agregarse and palabra_no_repetida:
+        diccionario_categorias[nombre_categoria] = agregar_elemento(diccionario_categorias[nombre_categoria], palabra)
+
+
+
+def cargar_fila_en_diccionario(diccionario_categorias: dict, columnas: list, cantidad_columnas: int) -> dict:
+    """
+    Procesa una fila del archivo CSV e incorpora su información al diccionario.
+ 
+    Parámetros:
+        diccionario_categorias (dict): Diccionario principal de categorías.
+        columnas (list): Columnas obtenidas de la fila.
+        cantidad_columnas (int): Número total de columnas detectadas.
+
+    Retorna:
+        dict: Diccionario actualizado con la categoría y sus palabras.
+    """
+    if validar_fila(cantidad_columnas):
+        nombre_categoria = columnas[0]
+
+        inicializar_categoria(diccionario_categorias, nombre_categoria)
+
+        indice = 1
+        while indice < cantidad_columnas:
+            palabra_actual = columnas[indice]
+            agregar_palabra(diccionario_categorias, nombre_categoria, palabra_actual)
+            indice += 1
+
+        mezclar_palabras(diccionario_categorias, nombre_categoria)
 
     return diccionario_categorias

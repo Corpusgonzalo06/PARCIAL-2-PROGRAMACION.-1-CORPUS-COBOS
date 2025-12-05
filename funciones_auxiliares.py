@@ -48,38 +48,4 @@ def mostrar_letras(letras: list) -> None:
         i += 1
     print("\n------------------------------")
 
-def obtener_palabras_del_nivel(nivel: int) -> dict:
-    """
-    Selecciona aleatoriamente una palabra base del diccionario PALABRAS
-    y devuelve toda la información necesaria para jugar un nivel.
-
-    Parámetros:
-    - nivel (int): Nivel actual del juego (no afecta la lógica, solo se recibe).
-
-    Retorno:
-    - dict: Diccionario con:
-        - "palabra_base" (str): Palabra principal elegida.
-        - "letras" (list): Letras de la palabra base en orden.
-        - "validas" (list): Lista de palabras válidas que se pueden formar.
-    """
-    
-    claves = []
-    for clave in PALABRAS:
-        claves = agregar_elemento(claves, clave)
-
-    total = len(claves)
-    indice = random.randint(0, total - 1)
-    palabra_base = claves[indice]
-
-    palabras_validas = PALABRAS[palabra_base]
-
-    letras = list(palabra_base)
-
-    resultado = {
-        "palabra_base": palabra_base,
-        "letras": letras,
-        "validas": palabras_validas
-    }
-
-    return resultado
 

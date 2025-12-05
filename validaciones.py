@@ -84,3 +84,14 @@ def validar_palabra(palabra: str, lista_permitida: list, lista_usadas: list) -> 
             es_valida = True
 
     return es_valida
+
+def validar_fila(cantidad_columnas: int) -> bool:
+    """
+    Una fila es válida si tiene al menos una categoría y una palabra.
+    """
+    fila_valida = False
+
+    if cantidad_columnas >= 2:
+        fila_valida = True
+
+    return fila_valida

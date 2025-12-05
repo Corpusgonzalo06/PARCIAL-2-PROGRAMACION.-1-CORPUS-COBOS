@@ -1,14 +1,14 @@
 {
     "gonzalo": {
-        "contraseña": "gonza",
-        "partidas_jugadas": 9,
-        "palabras_acertadas": 0,
+        "contraseña": "gonzalo",
+        "partidas_jugadas": 15,
+        "palabras_acertadas": 6,
         "palabras_erradas": 9,
         "victorias": 0,
-        "derrotas": 1,
-        "puntos": 0,
-        "tiempo_total": 0,
-        "tiempo_total_juego": 0,
+        "derrotas": 0,
+        "puntos": 30,
+        "tiempo_total": 196.0864429473877,
+        "tiempo_total_juego": 176.9103615283966,
         "errores_totales_juego": 0
     }
 }

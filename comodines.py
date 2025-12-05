@@ -1,9 +1,5 @@
 from mis_funciones import *
 
-# ===========================
-# FUNCIONES DE COMODINES
-# ===========================
-
 def revelar_palabra_base(palabra_base: str) -> None:
     """
     Descripción:
@@ -95,15 +91,17 @@ def validar_uso_comodin(texto_inicial: str) -> bool:
     texto = convertir_a_minusculas(texto_inicial)
 
     while respuesta_valida == False:
-        if texto == "si":
-            usar_bandera = True
-            respuesta_valida = True
-        elif texto == "no":
-            usar_bandera = False
-            respuesta_valida = True
-        else:
-            print("Por favor, ingresá 'si' o 'no'.")
-            texto = convertir_a_minusculas(input("¿Querés usar un comodín? (si/no): "))
+        match texto:
+            case "si":
+                usar_bandera = True
+                respuesta_valida = True
+            case "no":
+                usar_bandera = False
+                respuesta_valida = True
+            case _:
+                print("Por favor, ingresá 'si' o 'no'.")
+                texto = convertir_a_minusculas(input("¿Querés usar un comodín? (si/no): "))
+
     return usar_bandera
 
 
@@ -145,28 +143,6 @@ def mostrar_comodines(disponibles: list) -> None:
         i += 1
 
 
-def es_numero_valido(texto: str) -> bool:
-    """
-    Descripción:
-        Verifica si el texto ingresado es un número entero positivo válido.
-
-    PARÁMETROS:
-        texto (str): Texto ingresado por el usuario.
-
-    RETORNO:
-        bool: True si el texto representa un número, False si no.
-    """
-    valido = True
-    if len(texto) == 0:
-        valido = False
-    i = 0
-    while valido == True and i < len(texto):
-        if texto[i] < '0' or texto[i] > '9':
-            valido = False
-        i += 1
-    return valido
-
-
 def leer_opcion_numerica(texto: str) -> int:
     """
     Descripción:
@@ -178,8 +154,8 @@ def leer_opcion_numerica(texto: str) -> int:
     RETORNO:
         int: Número convertido, o None si el texto no es válido.
     """
-    resultado = None
-    es_val = es_numero_valido(texto)
+    resultado = None 
+    es_val = ver_si_es_numero_valido(texto)
     if es_val == True:
         resultado = convertir_a_entero(texto)
     return resultado
@@ -222,7 +198,7 @@ def manejar_comodines(comodines_jugador: dict, palabra_base: str, lista_palabras
             if opcion == None:
                 print("⚠️ Entrada inválida.")
                 valido = False
-            elif opcion < 1 or opcion > cantidad:
+            elif opcion < 1 or opcion > cantidad: 
                 print("⚠️ Ese número no corresponde a ningún comodín.")
                 valido = False
 

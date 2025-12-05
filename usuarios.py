@@ -117,7 +117,11 @@ def validar_sesion(usuario: dict | None, clave_usuario: str | None) -> bool:
         bool: True si la sesión es válida, False si no.
     """
     sesion_valida = True
+
     if usuario == None or clave_usuario == None:
         print("❌ No se puede iniciar el juego sin iniciar sesión.")
-        return False
+        sesion_valida = False
+
+    return sesion_valida
+
 

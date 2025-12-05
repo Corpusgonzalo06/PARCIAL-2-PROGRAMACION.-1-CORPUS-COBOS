@@ -21,7 +21,7 @@ def seleccionar_palabras_nivel(todas_las_palabras: list, cantidad: int = 3) -> l
         palabra_seleccionada = todas_las_palabras[indice_aleatorio]
 
         repetida = False
-        for palabra in palabras_nivel:
+        for palabra in palabras_nivel: ###### ver 
             if palabra == palabra_seleccionada:
                 repetida = True
                 break
@@ -33,7 +33,7 @@ def seleccionar_palabras_nivel(todas_las_palabras: list, cantidad: int = 3) -> l
 
 
 
-def preparar_palabra(palabra_base: str) -> list:
+def preparar_palabra(palabra_base: str, diccionario_palabras: dict) -> list:
     """
     Descripción:
         Prepara la información necesaria para jugar una ronda a partir de la palabra base.
@@ -43,6 +43,7 @@ def preparar_palabra(palabra_base: str) -> list:
     Parámetros:
         palabra_base (str): La palabra principal del nivel, utilizada para generar las letras
         desordenadas y acceder a sus palabras válidas.
+        diccionario_palabras (dict): Diccionario que contiene todas las palabras del juego.
 
     Retorno:
         list: Devuelve la lista de palabras válidas asociadas a la palabra base,
@@ -50,5 +51,29 @@ def preparar_palabra(palabra_base: str) -> list:
     """
     palabra_desordenada = desordenar_letras(palabra_base)
     mostrar_letras(palabra_desordenada)
-    palabras_validas = PALABRAS[palabra_base]
+    palabras_validas = diccionario_palabras[palabra_base]
     return palabras_validas
+
+
+def mezclar_palabras(diccionario_categorias: dict, nombre_categoria: str) -> None:
+    """
+    Mezcla aleatoriamente el orden de las palabras dentro de una categoría.
+
+    La mezcla solo se realiza si la categoría contiene más de una palabra.
+
+    Parámetros:
+        diccionario_categorias (dict): Diccionario de categorías.
+        nombre_categoria (str): Categoría cuyas palabras se mezclarán.
+
+    Retorna:
+        None
+    """
+    cantidad_palabras = len(diccionario_categorias[nombre_categoria])
+
+    if cantidad_palabras > 1:
+        for i in range(cantidad_palabras):
+            indice_aleatorio = random.randint(0, cantidad_palabras - 1)
+            temp = diccionario_categorias[nombre_categoria][i]
+            diccionario_categorias[nombre_categoria][i] = diccionario_categorias[nombre_categoria][indice_aleatorio]
+            diccionario_categorias[nombre_categoria][indice_aleatorio] = temp
+

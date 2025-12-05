@@ -59,7 +59,7 @@ PALABRAS = {
     "cocina": ["cocina", "coca", "cono", "cien", "cinc", "oia", "con"],
     "regalo": ["regalo", "ruego", "gala", "algo", "ola", "leo", "ore", "dar"],
     "fiesta": ["fiesta", "fase", "seta", "tes", "esta", "fia", "eje", "si"],
-    "juegos": ["juegos", "juez", "uso", "seo", "gos"],
+    "juegos": ["juegos", "juez", "uso", "ego", "egos"],
     "manana": ["manana", "mana", "ama", "ana"],
     "novios": ["novios", "vino", "no", "os", "son", "nos"],
     "cartera": ["cartera", "rata", "arte", "cara", "cera", "rara", "teca", "rata"],

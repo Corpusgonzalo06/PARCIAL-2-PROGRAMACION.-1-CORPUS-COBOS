@@ -1,6 +1,3 @@
-##########################
-# FUNCIONES DE PUNTAJE
-##########################
 import time
 def calcular_puntos_por_palabra(palabra: str, tiempo_respuesta: float) -> int:
     """
@@ -54,9 +51,7 @@ def sumar_error(usuario: dict) -> None:
     usuario["palabras_erradas"] += 1
 
 
-##########################
-# FUNCIONES DE RACHAS Y TURNO
-##########################
+
 
 def calcular_puntos_turno(intento: str, racha: int, tiempo_respuesta: float) -> int:
     """
@@ -76,35 +71,6 @@ def calcular_puntos_turno(intento: str, racha: int, tiempo_respuesta: float) -> 
     return puntos
 
 
-def actualizar_racha(racha: int) -> int:
-    """
-    Incrementa la racha de aciertos.
-
-    PARÁMETROS:
-        racha (int): Racha actual.
-
-    RETORNO:
-        int: Nueva racha incrementada.
-    """
-    return racha + 1
-
-
-def procesar_error_turno(estado_juego: dict, usuario: dict) -> int:
-    """
-    Procesa un error en el turno: resta vidas y reinicia racha.
-
-    PARÁMETROS:
-        estado_juego (dict): Estado actual del juego.
-        usuario (dict): Datos del usuario.
-
-    RETORNO:
-        int: Racha reiniciada a 0.
-    """
-    estado_juego["vidas"] -= 1
-    racha = 0
-    sumar_error(usuario)
-    print(f"❌ Incorrecto! Vidas restantes: {estado_juego['vidas']}")
-    return racha
 
 def aplicar_puntos(usuario: dict, estado_juego: dict, puntos: int) -> None:
     """
@@ -126,42 +92,6 @@ def aplicar_puntos(usuario: dict, estado_juego: dict, puntos: int) -> None:
 
 
 
-def calcular_puntos(intento: str, racha: int) -> int:
-    """
-    Descripción:
-        Calcula los puntos del intento actual usando la palabra ingresada.
-        Si el jugador lleva una racha de 2 o más aciertos, se suman puntos extra.
-
-    Parámetros:
-        intento (str): Palabra ingresada por el jugador.
-        racha (int): Racha de aciertos consecutivos antes del intento.
-
-    Retorno:
-        int: Devuelve la cantidad de puntos obtenidos en el intento.
-    """
-    puntos = calcular_puntos_por_palabra(intento, time.time())
-    if racha >= 2:
-        puntos += 2
-    return puntos
-
-def calcular_puntos(intento: str, racha: int) -> int:
-    """
-    Descripción:
-        Calcula los puntos del intento actual usando la palabra ingresada.
-        Si el jugador lleva una racha de 2 o más aciertos, se suman puntos extra.
-
-    Parámetros:
-        intento (str): Palabra ingresada por el jugador.
-        racha (int): Racha de aciertos consecutivos antes del intento.
-
-    Retorno:
-        int: Devuelve la cantidad de puntos obtenidos en el intento.
-    """
-    puntos = calcular_puntos_por_palabra(intento, time.time())
-    if racha >= 2:
-        puntos += 2
-    return puntos
-
 def actualizar_racha(racha: int) -> int:
     """
     Descripción:
@@ -177,22 +107,3 @@ def actualizar_racha(racha: int) -> int:
     return racha
 
 
-def calcular_puntos_turno(intento: str, racha: int, tiempo_respuesta: float) -> int:
-    """
-    Descripción:
-        Calcula los puntos obtenidos en un turno considerando la palabra ingresada,
-        el tiempo de respuesta y la racha actual de aciertos. A partir de 2 de racha,
-        se aplican puntos adicionales.
-
-    Parámetros:
-        intento (str): Palabra ingresada por el jugador.
-        racha (int): Racha de aciertos consecutivos antes del intento.
-        tiempo_respuesta (float): Tiempo exacto del intento, usado para el cálculo de puntos.
-
-    Retorno:
-        int: Devuelve los puntos conseguidos en el turno.
-    """
-    puntos = calcular_puntos_por_palabra(intento, tiempo_respuesta)
-    if racha >= 2:
-        puntos += 2
-    return puntos
