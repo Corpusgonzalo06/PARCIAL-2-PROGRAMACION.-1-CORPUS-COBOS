@@ -393,5 +393,7 @@ def logica_principal(usuario: dict | None, ruta: str, vidas: int = 3, clave_usua
 
         guardar_datos_usuario(usuario, clave_usuario, ruta)
 
+        finalizar_juego(estado_juego, usuario)
+
 
 

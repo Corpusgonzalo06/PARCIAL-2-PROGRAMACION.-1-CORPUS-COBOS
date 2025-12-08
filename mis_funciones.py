@@ -68,12 +68,11 @@ def agregar_elemento(lista: list, elemento: any) -> list:
         list: Nueva lista con el elemento agregado.
     """
     nueva = []
-    i = 0
-    while i < len(lista):
+    for i in range(len(lista)):
         nueva = nueva + [lista[i]]
-        i += 1
     nueva = nueva + [elemento]
     return nueva
+
 
 
 
